@@ -1,814 +1,2241 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Letter For You ✨ | Open Me</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Technology Explorer: From Data to Intelligent AI</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Canvas Confetti CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
-
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <style>
-        :root {
-            --env-width: 320px;
-            --env-height: 210px;
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            charcoal: '#121417',
+            surface: '#1A1D24',
+            surfaceCard: '#242833',
+            surfaceBorder: '#2F3545',
+            neonYellow: '#F2C811',
+            neonYellowHover: '#FFD726',
+            neonGlow: 'rgba(242, 200, 17, 0.28)',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
         }
+      }
+    }
+  </script>
 
-        @media (min-width: 640px) {
-            :root {
-                --env-width: 440px;
-                --env-height: 270px;
-            }
-        }
+  <style>
+    /* Custom scrollbars */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #121417;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2F3545;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #F2C811;
+    }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+    /* Glow & Card Micro-Interactions */
+    .glow-yellow {
+      box-shadow: 0 0 24px rgba(242, 200, 17, 0.28);
+    }
+    .glow-card {
+      transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glow-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 28px -8px rgba(242, 200, 17, 0.22);
+      border-color: #F2C811;
+    }
 
-        body {
-            background-color: #070913;
-            color: #f8fafc;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
+    /* Interactive SVG Connector animation */
+    .branch-path {
+      stroke-dasharray: 8, 4;
+      animation: dashMove 22s linear infinite;
+    }
+    @keyframes dashMove {
+      to {
+        stroke-dashoffset: -120;
+      }
+    }
 
-        .font-serif-luxury {
-            font-family: 'Playfair Display', serif;
-        }
+    /* Presentation mode for college projectors */
+    body.presentation-mode {
+      font-size: 1.15rem;
+    }
+    body.presentation-mode .container-max {
+      max-width: 98% !important;
+    }
 
-        .font-handwriting {
-            font-family: 'Caveat', cursive;
-        }
-
-        /* Ambient Glowing Background Lights */
-        .ambient-glow {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(130px);
-            opacity: 0.38;
-            pointer-events: none;
-            z-index: 0;
-            animation: pulseGlow 12s ease-in-out infinite alternate;
-        }
-
-        .glow-violet {
-            width: 520px;
-            height: 520px;
-            top: -120px;
-            left: -100px;
-            background: radial-gradient(circle, #ec4899, #7c3aed);
-        }
-
-        .glow-amber {
-            width: 480px;
-            height: 480px;
-            bottom: -100px;
-            right: -80px;
-            background: radial-gradient(circle, #f59e0b, #6366f1);
-            animation-delay: -6s;
-        }
-
-        @keyframes pulseGlow {
-            0% { transform: scale(1) translate(0, 0); }
-            50% { transform: scale(1.15) translate(40px, 30px); }
-            100% { transform: scale(0.9) translate(-30px, 50px); }
-        }
-
-        /* Gentle float for the unopened envelope */
-        @keyframes floatAnim {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(0.6deg); }
-        }
-
-        .envelope-floating {
-            animation: floatAnim 4.5s ease-in-out infinite;
-        }
-
-        .envelope-floating.opened {
-            animation: none;
-        }
-
-        .envelope-perspective {
-            perspective: 1400px;
-            width: var(--env-width);
-            height: var(--env-height);
-            position: relative;
-        }
-
-        .envelope-stage {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        /* Envelope Back Base */
-        .envelope-back-panel {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
-            border: 2px solid rgba(168, 85, 247, 0.35);
-            border-radius: 20px;
-            box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.75), 0 0 30px rgba(139, 92, 246, 0.25);
-            z-index: 1;
-        }
-
-        /* Top Flap (3D Origin at the top fold line) */
-        .envelope-top-flap {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: calc(var(--env-width) / 2) solid transparent;
-            border-right: calc(var(--env-width) / 2) solid transparent;
-            border-top: calc(var(--env-height) * 0.62) solid #312e81;
-            transform-origin: top center;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.25s ease;
-            z-index: 5;
-            filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.5));
-            cursor: pointer;
-        }
-
-        .envelope-stage.is-open .envelope-top-flap {
-            transform: rotateX(180deg);
-            z-index: 1;
-        }
-
-        /* Front Envelope Triangles (Pockets) */
-        .envelope-front-pocket {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-            border-radius: 20px;
-            z-index: 3;
-            pointer-events: none;
-        }
-
-        .pocket-bottom {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: calc(var(--env-width) / 2) solid transparent;
-            border-right: calc(var(--env-width) / 2) solid transparent;
-            border-bottom: calc(var(--env-height) * 0.64) solid #1e1b4b;
-            filter: drop-shadow(0 -5px 12px rgba(0, 0, 0, 0.45));
-        }
-
-        .pocket-left {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-bottom: var(--env-height) solid #242265;
-            border-right: calc(var(--env-width) * 0.56) solid transparent;
-            opacity: 0.9;
-        }
-
-        .pocket-right {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 0;
-            height: 0;
-            border-bottom: var(--env-height) solid #2d2a7c;
-            border-left: calc(var(--env-width) * 0.56) solid transparent;
-            opacity: 0.9;
-        }
-
-        .wax-seal-button {
-            position: absolute;
-            top: calc(var(--env-height) * 0.54);
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 6;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .wax-seal-gem {
-            width: 62px;
-            height: 62px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 35% 35%, #fb7185 0%, #e11d48 60%, #9f1239 100%);
-            border: 2px solid rgba(254, 205, 211, 0.6);
-            box-shadow: 0 10px 25px rgba(225, 29, 72, 0.65), inset 0 2px 5px rgba(255, 255, 255, 0.65);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffe4e6;
-            font-size: 1.45rem;
-            transition: transform 0.3s ease;
-        }
-
-        .wax-seal-button:hover .wax-seal-gem {
-            transform: scale(1.1);
-            box-shadow: 0 14px 30px rgba(225, 29, 72, 0.8), inset 0 2px 7px rgba(255, 255, 255, 0.8);
-        }
-
-        .wax-seal-tag {
-            margin-top: 6px;
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid rgba(251, 113, 133, 0.5);
-            color: #fecdd3;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            padding: 3px 9px;
-            border-radius: 9999px;
-            white-space: nowrap;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            pointer-events: none;
-        }
-
-        .envelope-stage.is-open .wax-seal-button {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.2);
-            pointer-events: none;
-        }
-
-        /* Dark backdrop overlay */
-        .letter-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(4, 7, 20, 0.88);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-        }
-
-        .letter-backdrop.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        /* Small preview sheet tucked inside envelope before opening */
-        .letter-tucked {
-            position: absolute;
-            top: 6%;
-            left: 5%;
-            width: 90%;
-            height: 88%;
-            background: #ffffff;
-            border-radius: 14px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            z-index: 2;
-            transition: transform 0.6s ease;
-        }
-
-        /* The full modal note that expands on open */
-        .letter-modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -46%) scale(0.85);
-            width: 92%;
-            max-width: 580px;
-            max-height: 90vh;
-            overflow-y: auto;
-            background: #ffffff;
-            background-image: 
-                radial-gradient(circle at 100% 0%, rgba(254, 243, 199, 0.5) 0%, transparent 40%),
-                radial-gradient(circle at 0% 100%, rgba(254, 226, 226, 0.4) 0%, transparent 40%);
-            color: #1e1b18; /* High-contrast crisp charcoal black */
-            border-radius: 24px;
-            border: 2px solid rgba(245, 158, 11, 0.35);
-            box-shadow: 0 25px 70px -10px rgba(0, 0, 0, 0.8), 0 0 50px rgba(245, 158, 11, 0.25);
-            z-index: 200;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .letter-modal.revealed {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-            pointer-events: auto;
-        }
-
-        /* Postal Stamp styling */
-        .stamp-badge {
-            border: 2px dashed #f59e0b;
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-        }
-
-        /* Golden shimmer text animation */
-        .gold-shimmer-title {
-            background: linear-gradient(90deg, #f59e0b, #ec4899, #8b5cf6, #f59e0b);
-            background-size: 200% auto;
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: titleShimmer 5s linear infinite;
-        }
-
-        @keyframes titleShimmer {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
-        }
-
-        /* Micro buttons */
-        .btn-action {
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
-        }
-        .btn-action:hover {
-            transform: translateY(-2px) scale(1.02);
-        }
-        .btn-action:active {
-            transform: translateY(1px) scale(0.98);
-        }
-    </style>
+    @media print {
+      header, footer, #presModeBtn, #downloadBtn, button {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        color: #111111 !important;
+      }
+    }
+  </style>
 </head>
-<body class="flex flex-col items-center justify-between p-4 sm:p-8 min-h-screen relative selection:bg-pink-500 selection:text-white">
 
-    <!-- Ambient Glow Orbs -->
-    <div class="ambient-glow glow-violet"></div>
-    <div class="ambient-glow glow-amber"></div>
+<body class="bg-charcoal text-slate-100 min-h-screen font-sans antialiased selection:bg-neonYellow selection:text-charcoal flex flex-col justify-between">
 
-    <!-- Particle Starfield Canvas -->
-    <canvas id="particleCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
-
-    <!-- Dark Backdrop for Modal Letter -->
-    <div id="letterBackdrop" class="letter-backdrop" onclick="closeNote()"></div>
-
-    <header class="relative z-10 w-full max-w-4xl flex items-center justify-between py-3 mb-2">
-        <div class="flex items-center gap-2.5">
-            <span class="w-8 h-8 rounded-xl bg-gradient-to-tr from-pink-500 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-pink-500/30 text-sm">
-                <i class="fa-solid fa-sparkles"></i>
-            </span>
-            <span class="text-xs sm:text-sm font-bold tracking-wider text-slate-300 uppercase">A Dose of Positivity</span>
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50 bg-[#121417]/92 backdrop-blur-md border-b border-surfaceBorder px-4 lg:px-8 py-3 transition-all">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      <!-- Logo & Brand -->
+      <div class="flex items-center space-x-3 cursor-pointer group" onclick="navigateTo('dashboard')">
+        <div class="w-10 h-10 rounded-xl bg-neonYellow text-charcoal flex items-center justify-center font-display font-black text-xl shadow-lg shadow-neonYellow/20 group-hover:scale-105 transition">
+          TE
         </div>
+        <div>
+          <h1 class="text-base font-bold font-display tracking-tight text-white flex items-center gap-2">
+            TECHNOLOGY EXPLORER
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-neonYellow/10 text-neonYellow border border-neonYellow/30 font-semibold tracking-wider uppercase font-mono">10 Modules</span>
+          </h1>
+          <p class="text-xs text-slate-400 hidden sm:block">From Data to Intelligent AI &bull; 100% English Learning Edition</p>
+        </div>
+      </div>
 
-        <!-- Controls: Sound Toggle -->
-        <button 
-            id="soundToggleBtn" 
-            onclick="toggleSound()" 
-            class="px-3.5 py-1.5 rounded-full bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-xs font-semibold text-slate-300 flex items-center gap-2 transition backdrop-blur-md shadow-md"
-            title="Toggle Sound Effects"
-        >
-            <i id="soundIcon" class="fa-solid fa-volume-high text-amber-400"></i>
-            <span id="soundLabel">Sound ON</span>
+      <!-- Center Breadcrumb -->
+      <div id="nav-breadcrumb" class="hidden md:flex items-center space-x-2 text-sm text-slate-400 font-mono text-xs">
+        <button onclick="navigateTo('dashboard')" class="hover:text-neonYellow transition">Dashboard</button>
+        <span class="text-slate-600">/</span>
+        <span id="current-crumb-topic" class="text-neonYellow font-semibold">Home</span>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="flex items-center space-x-2">
+        <button onclick="navigateTo('ecosystem')" class="text-xs px-3 py-1.5 rounded-lg bg-surfaceCard hover:bg-surfaceBorder border border-surfaceBorder text-slate-200 transition font-medium hidden lg:inline-flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-neonYellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Ecosystem
         </button>
-    </header>
+        <button onclick="navigateTo('quiz')" class="text-xs px-3 py-1.5 rounded-lg bg-surfaceCard hover:bg-surfaceBorder border border-surfaceBorder text-slate-200 transition font-medium hidden sm:inline-flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-neonYellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Quiz (<span id="quick-score">0/10</span>)
+        </button>
+        <button onclick="navigateTo('capstone')" class="text-xs px-3 py-1.5 rounded-lg bg-surfaceCard hover:bg-surfaceBorder border border-surfaceBorder text-slate-200 transition font-medium hidden sm:inline-flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-neonYellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          Challenge
+        </button>
+        <!-- Presentation Mode -->
+        <button id="presModeBtn" onclick="togglePresentationMode()" title="Toggle Presentation / Fullscreen" class="p-2 rounded-lg bg-surfaceCard border border-surfaceBorder hover:border-neonYellow text-slate-300 hover:text-neonYellow transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+        </button>
+        <!-- Download File -->
+        <button id="downloadBtn" onclick="downloadSelf()" title="Export Self-Contained HTML" class="px-3 py-1.5 rounded-lg bg-neonYellow text-charcoal font-bold text-xs hover:bg-neonYellowHover transition flex items-center gap-1 shadow-md shadow-neonYellow/20">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          <span class="hidden md:inline">Export HTML</span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-    <main class="relative z-10 flex flex-col items-center justify-center my-auto w-full max-w-xl py-6">
+  <!-- MAIN APP CONTAINER -->
+  <main class="flex-grow container-max max-w-7xl mx-auto w-full px-4 lg:px-8 py-6">
 
-        <!-- Top Title & Instructions -->
-        <div id="openPrompt" class="mb-7 text-center transition-all duration-500 transform cursor-pointer" onclick="openNote()">
-            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-pink-500/40 bg-pink-500/10 backdrop-blur-md text-pink-300 text-xs font-bold tracking-wide shadow-lg shadow-pink-500/20 animate-pulse">
-                <span>💌</span> Click the Envelope or Seal to Open
+    <!-- VIEW 1: MASTER DASHBOARD -->
+    <section id="view-dashboard" class="space-y-8">
+      <!-- Hero Banner -->
+      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-surface via-[#202531] to-surfaceCard border border-surfaceBorder p-6 sm:p-10 shadow-2xl">
+        <div class="absolute -right-16 -top-16 w-80 h-80 bg-neonYellow/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="max-w-3xl space-y-4 relative z-10">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-neonYellow text-charcoal font-display">
+            Interactive Tree Learning Platform
+          </span>
+          <h2 class="text-3xl sm:text-5xl font-extrabold font-display tracking-tight text-white leading-tight">
+            TECHNOLOGY EXPLORER:<br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-neonYellow via-amber-300 to-yellow-500">
+              FROM DATA TO INTELLIGENT AI
             </span>
-            <h1 class="text-3xl sm:text-5xl font-extrabold mt-3.5 gold-shimmer-title tracking-tight font-serif-luxury">
-                A Letter Just For You
-            </h1>
-            <p class="text-slate-400 text-xs sm:text-sm mt-2 max-w-sm mx-auto">
-                Tap the wax seal below to unfold your personal handwritten reminder.
-            </p>
-        </div>
-
-        <!-- 3D Envelope Wrapper -->
-        <div class="envelope-perspective envelope-floating" id="envelopePerspective">
-            <div class="envelope-stage" id="envelopeStage">
-                
-                <!-- Back panel -->
-                <div class="envelope-back-panel"></div>
-
-                <!-- Tucked letter sheet (visible behind flap before opening) -->
-                <div class="letter-tucked"></div>
-
-                <!-- Flap (Opens upwards in 3D) -->
-                <div class="envelope-top-flap" onclick="openNote()"></div>
-
-                <!-- Envelope Front Pockets -->
-                <div class="envelope-front-pocket">
-                    <div class="pocket-left"></div>
-                    <div class="pocket-right"></div>
-                    <div class="pocket-bottom"></div>
-                </div>
-
-                <!-- Interactive Wax Seal Badge -->
-                <div class="wax-seal-button" id="waxSealButton" onclick="openNote()">
-                    <div class="wax-seal-gem">
-                        <i class="fa-solid fa-heart animate-pulse"></i>
-                    </div>
-                    <span class="wax-seal-tag">
-                        <i class="fa-solid fa-hand-pointer mr-1"></i> TAP TO UNSEAL
-                    </span>
-                </div>
-
-            </div>
-        </div>
-
-        <p class="text-[11px] text-slate-500 mt-7 text-center">
-            Tap the seal to reveal the message in high-clarity view • Fold it back anytime
-        </p>
-    </main>
-
-    <div id="letterModal" class="letter-modal p-6 sm:p-9" role="dialog" aria-modal="true" aria-labelledby="letterHeading">
-        
-        <!-- Header of the letter card -->
-        <div class="flex items-center justify-between border-b-2 border-amber-200/70 pb-3 mb-5">
-            <div class="flex items-center gap-2.5">
-                <span class="w-3 h-3 rounded-full bg-pink-500 animate-ping"></span>
-                <span class="text-xs font-extrabold tracking-widest uppercase text-amber-800">
-                    SPECIAL DELIVERY • POSITIVE VIBES
-                </span>
-            </div>
-            
-            <!-- Postage Stamp -->
-            <div class="w-11 h-11 rounded-lg stamp-badge flex flex-col items-center justify-center text-amber-800 shadow-sm rotate-3">
-                <i class="fa-solid fa-certificate text-xs text-amber-600"></i>
-                <span class="text-[9px] font-black uppercase tracking-tighter">LOVE</span>
-            </div>
-        </div>
-
-        <!-- High Contrast Letter Body with Bold & Legible Words -->
-        <div class="space-y-4">
-            <h2 id="letterHeading" class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-serif-luxury tracking-tight">
-                ✨ Dear Wonderful Soul,
-            </h2>
-
-            <p class="text-base sm:text-lg text-slate-800 leading-relaxed font-semibold">
-                Just in case nobody told you today:
-            </p>
-
-            <!-- Highlighted Callout Box with High Contrast -->
-            <div class="p-5 sm:p-6 rounded-2xl bg-amber-50/90 border-l-4 border-amber-500 shadow-sm">
-                <p class="text-base sm:text-lg text-slate-900 font-medium leading-relaxed italic">
-                    "You are capable of extraordinary things. Every small step you take is leading you toward greatness. Breathe deeply, believe in your magic, and remember that the world is a much brighter and warmer place with you in it!"
-                </p>
-            </div>
-
-            <p class="text-lg sm:text-xl text-amber-800 font-bold tracking-tight">
-                Keep shining brightly! 🌟
-            </p>
-
-            <!-- Handwritten Signature -->
-            <div class="pt-3 border-t border-amber-200/50 flex flex-col items-end">
-                <p class="font-handwriting text-2xl sm:text-3xl text-pink-600 font-extrabold tracking-wide">
-                    — Wishing you joy, peace & endless smiles.
-                </p>
-                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mt-0.5">
-                    Written with warmth for you
-                </span>
-            </div>
-        </div>
-
-        <!-- Letter Footer Actions -->
-        <div class="pt-6 mt-6 border-t-2 border-amber-200/70 flex flex-wrap items-center justify-between gap-3">
-            <!-- Copy Button -->
-            <button 
-                onclick="copyNoteMessage()" 
-                class="btn-action px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold flex items-center gap-2 shadow-lg shadow-slate-900/25"
-            >
-                <i class="fa-regular fa-copy text-amber-400"></i>
-                <span id="copyBtnText">Copy Note 📋</span>
+          </h2>
+          <p class="text-base sm:text-lg text-slate-300 leading-relaxed">
+            “Learn 10 Important Technologies Through Interactive Trees and Real-Life Examples.”
+          </p>
+          <div class="p-4 rounded-xl bg-charcoal/80 border border-surfaceBorder text-xs sm:text-sm text-slate-300 space-y-1">
+            <span class="text-neonYellow font-bold flex items-center gap-1.5">
+              <span>🎓</span> Welcome Students & Beginners!
+            </span>
+            <p>Every concept is explained in crisp, jargon-free English with everyday analogies (e-commerce tracking, household budgeting, visitor security passes) and clickable mind-map trees with working workflows.</p>
+          </div>
+          <div class="pt-2 flex flex-wrap gap-3">
+            <button onclick="openTopic(0)" class="px-5 py-2.5 rounded-xl bg-neonYellow text-charcoal font-bold text-sm hover:bg-neonYellowHover transition shadow-lg shadow-neonYellow/20 flex items-center gap-2">
+              Start with Topic 1: Power BI
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
             </button>
+            <button onclick="navigateTo('ecosystem')" class="px-5 py-2.5 rounded-xl bg-surfaceCard border border-surfaceBorder hover:border-neonYellow text-slate-200 font-semibold text-sm transition flex items-center gap-2">
+              View Technology Ecosystem Map
+            </button>
+            <button onclick="navigateTo('quiz')" class="px-5 py-2.5 rounded-xl bg-surfaceCard border border-surfaceBorder hover:border-neonYellow text-slate-200 font-semibold text-sm transition flex items-center gap-2">
+              Take 10-Question Quiz
+            </button>
+          </div>
+        </div>
+      </div>
 
-            <!-- Sparkles & Close Buttons -->
-            <div class="flex items-center gap-2">
-                <button 
-                    onclick="fireCelebrationBurst()" 
-                    class="btn-action px-3.5 py-2.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs sm:text-sm font-bold flex items-center gap-1.5 transition"
-                    title="Celebrate with Sparkles"
-                >
-                    <span>🎉</span> Sparkles
-                </button>
-
-                <button 
-                    onclick="closeNote()" 
-                    class="btn-action px-4 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-lg shadow-pink-500/30"
-                >
-                    <span>Close / Fold Back</span> 💌
-                </button>
-            </div>
+      <!-- Bento Grid for 10 Modules -->
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-xl font-bold font-display text-white flex items-center gap-2">
+            <span>Explore All 10 Technologies</span>
+            <span class="text-xs text-slate-400 font-normal hidden sm:inline">(Click any module card to enter its interactive tree)</span>
+          </h3>
+          <span class="text-xs text-neonYellow font-mono bg-neonYellow/10 px-2.5 py-1 rounded border border-neonYellow/30">10 Modules Ready</span>
         </div>
 
+        <div id="topic-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: INTERACTIVE TOPIC TREE & EXPLORER -->
+    <section id="view-topic" class="hidden space-y-6">
+      <!-- Navigation controls bar -->
+      <div class="flex flex-wrap items-center justify-between gap-3 bg-surface border border-surfaceBorder p-3 sm:p-4 rounded-xl">
+        <div class="flex items-center space-x-2">
+          <button onclick="navigateTo('dashboard')" class="px-3 py-1.5 rounded-lg bg-surfaceCard hover:bg-surfaceBorder border border-surfaceBorder text-xs text-slate-300 hover:text-white flex items-center gap-1.5 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            Dashboard
+          </button>
+          <button onclick="resetTreeSelection()" class="px-3 py-1.5 rounded-lg bg-surfaceCard hover:bg-surfaceBorder border border-surfaceBorder text-xs text-slate-300 hover:text-white flex items-center gap-1.5 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            Reset Tree View
+          </button>
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <button id="btn-prev-topic" onclick="prevTopic()" class="px-3 py-1.5 rounded-lg bg-surfaceCard hover:bg-surfaceBorder border border-surfaceBorder text-xs text-slate-300 hover:text-white flex items-center gap-1.5 transition">
+            &larr; Prev Topic
+          </button>
+          <span id="topic-indicator-badge" class="px-3 py-1 rounded-md bg-neonYellow/10 text-neonYellow border border-neonYellow/30 text-xs font-mono font-bold">
+            Topic 1 of 10
+          </span>
+          <button id="btn-next-topic" onclick="nextTopic()" class="px-3 py-1.5 rounded-lg bg-surfaceCard hover:bg-surfaceBorder border border-surfaceBorder text-xs text-slate-300 hover:text-white flex items-center gap-1.5 transition">
+            Next Topic &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- Mind Map Tree Visualization Component -->
+      <div class="relative bg-surface rounded-2xl border border-surfaceBorder p-4 sm:p-6 overflow-hidden">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-surfaceBorder mb-4 gap-2">
+          <div>
+            <h2 id="tree-title" class="text-2xl sm:text-3xl font-black font-display text-white flex items-center gap-3">
+              <!-- Dynamically populated -->
+            </h2>
+            <p id="tree-subtitle" class="text-xs sm:text-sm text-slate-400 mt-1"></p>
+          </div>
+          <div class="text-xs text-slate-300 bg-charcoal px-3 py-1.5 rounded-lg border border-surfaceBorder flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-neonYellow animate-ping"></span>
+            <span>Click any branch node to load its detailed walkthrough</span>
+          </div>
+        </div>
+
+        <!-- Central Mind Map Structure -->
+        <div class="w-full relative py-6 flex flex-col items-center">
+          
+          <!-- Central Hub Node (Main Topic) -->
+          <div id="tree-center-node" onclick="selectBranch('what')" class="cursor-pointer group relative z-20 px-6 py-4 rounded-2xl bg-gradient-to-b from-surfaceCard to-surfaceBorder border-2 border-neonYellow shadow-lg shadow-neonYellow/20 hover:scale-105 transition-all text-center max-w-md">
+            <span class="text-[10px] uppercase font-mono tracking-widest text-neonYellow block mb-1 font-bold">MAIN TOPIC HUB</span>
+            <div id="tree-center-name" class="text-xl sm:text-2xl font-black font-display text-white group-hover:text-neonYellow transition"></div>
+            <div id="tree-center-sub" class="text-xs text-slate-300 mt-1 line-clamp-1"></div>
+          </div>
+
+          <!-- SVG Visual Connector Lines (Desktop/Tablet) -->
+          <div class="w-full max-w-5xl h-24 my-2 relative hidden md:block">
+            <svg class="w-full h-full" viewBox="0 0 1000 100" preserveAspectRatio="none">
+              <!-- Connecting lines to 8 branches -->
+              <path class="branch-path" d="M 500 0 C 500 40, 65 40, 65 100" stroke="#4B5563" stroke-width="2" fill="none" id="line-0"/>
+              <path class="branch-path" d="M 500 0 C 500 40, 190 40, 190 100" stroke="#4B5563" stroke-width="2" fill="none" id="line-1"/>
+              <path class="branch-path" d="M 500 0 C 500 40, 315 40, 315 100" stroke="#4B5563" stroke-width="2" fill="none" id="line-2"/>
+              <path class="branch-path" d="M 500 0 C 500 40, 440 40, 440 100" stroke="#4B5563" stroke-width="2" fill="none" id="line-3"/>
+              <path class="branch-path" d="M 500 0 C 500 40, 565 40, 565 100" stroke="#4B5563" stroke-width="2" fill="none" id="line-4"/>
+              <path class="branch-path" d="M 500 0 C 500 40, 690 40, 690 100" stroke="#4B5563" stroke-width="2" fill="none" id="line-5"/>
+              <path class="branch-path" d="M 500 0 C 500 40, 815 40, 815 100" stroke="#4B5563" stroke-width="2" fill="none" id="line-6"/>
+              <path class="branch-path" d="M 500 0 C 500 40, 940 40, 940 100" stroke="#4B5563" stroke-width="2" fill="none" id="line-7"/>
+            </svg>
+          </div>
+
+          <!-- 8 Interactive Branch Nodes (Grid Layout) -->
+          <div id="tree-branch-container" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 sm:gap-3 w-full max-w-6xl mt-4 md:mt-0 z-20">
+            <!-- 8 branches populated by renderBranches() -->
+          </div>
+        </div>
+      </div>
+
+      <!-- DETAILED EXPLANATION PANEL -->
+      <div id="explanation-panel" class="bg-surfaceCard rounded-2xl border border-surfaceBorder p-6 sm:p-8 transition-all">
+        <!-- Dynamic content filled by JS on branch click -->
+      </div>
+    </section>
+
+    <!-- VIEW 3: CROSS-TOPIC ECOSYSTEM MAP -->
+    <section id="view-ecosystem" class="hidden space-y-6">
+      <div class="bg-surface rounded-2xl border border-surfaceBorder p-6 sm:p-8">
+        <div class="max-w-3xl mb-8">
+          <span class="text-neonYellow text-xs font-mono uppercase tracking-wider block mb-1">Architectural Integration</span>
+          <h2 class="text-3xl font-extrabold font-display text-white">Full Technology Ecosystem Connection Map</h2>
+          <p class="text-slate-300 text-sm mt-2 leading-relaxed">
+            These 10 modern technologies do not operate in isolation. They form connected pillars across Data Intelligence, Software Deployment, Large Language AI, and Cybersecurity. Click any highlighted button to jump straight into its interactive tree.
+          </p>
+        </div>
+
+        <div class="space-y-6">
+          <!-- Pipeline 1: Data Analytics -->
+          <div class="bg-surfaceCard border border-surfaceBorder rounded-xl p-5 hover:border-slate-500 transition">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+              <h4 class="font-bold text-white text-base">1. Data Analytics Stream</h4>
+              <span class="text-xs text-slate-400">(Raw Business Data &rarr; Executive Decision Making)</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+              <div class="px-4 py-2 bg-charcoal rounded-lg border border-slate-700 text-xs text-slate-300 font-mono">
+                Raw Operational Data (Sales, Orders, Student Attendance)
+              </div>
+              <span class="text-neonYellow font-bold">&rarr;</span>
+              <button onclick="openTopic(0)" class="px-4 py-2 bg-neonYellow/10 text-neonYellow hover:bg-neonYellow hover:text-charcoal rounded-lg border border-neonYellow text-xs font-bold transition">
+                Power BI (ETL & Enterprise Dashboards)
+              </button>
+              <span class="text-neonYellow font-bold">&rarr;</span>
+              <button onclick="openTopic(1)" class="px-4 py-2 bg-neonYellow/10 text-neonYellow hover:bg-neonYellow hover:text-charcoal rounded-lg border border-neonYellow text-xs font-bold transition">
+                Tableau (Deep Visual & Spatial Exploration)
+              </button>
+              <span class="text-neonYellow font-bold">&rarr;</span>
+              <div class="px-4 py-2 bg-green-950/70 border border-green-700 text-green-300 rounded-lg text-xs font-semibold">
+                Actionable Strategic Growth Insights
+              </div>
+            </div>
+          </div>
+
+          <!-- Pipeline 2: Application Development & APIs -->
+          <div class="bg-surfaceCard border border-surfaceBorder rounded-xl p-5 hover:border-slate-500 transition">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+              <h4 class="font-bold text-white text-base">2. Secure Software & Deployment Pipeline</h4>
+              <span class="text-xs text-slate-400">(Code On Laptop &rarr; High-Availability Production Cloud)</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+              <div class="px-4 py-2 bg-charcoal rounded-lg border border-slate-700 text-xs text-slate-300 font-mono">
+                Web / Mobile Application Source Code
+              </div>
+              <span class="text-neonYellow font-bold">&rarr;</span>
+              <button onclick="openTopic(3)" class="px-4 py-2 bg-neonYellow/10 text-neonYellow hover:bg-neonYellow hover:text-charcoal rounded-lg border border-neonYellow text-xs font-bold transition">
+                API Keys (Protected Service Credentials)
+              </button>
+              <span class="text-neonYellow font-bold">&rarr;</span>
+              <button onclick="openTopic(4)" class="px-4 py-2 bg-neonYellow/10 text-neonYellow hover:bg-neonYellow hover:text-charcoal rounded-lg border border-neonYellow text-xs font-bold transition">
+                Deployment (Localhost &rarr; Cloud Hosting)
+              </button>
+              <span class="text-neonYellow font-bold">&rarr;</span>
+              <div class="px-4 py-2 bg-emerald-950/70 border border-emerald-700 text-emerald-300 rounded-lg text-xs font-semibold">
+                24/7 Global High-Availability Public URL
+              </div>
+            </div>
+          </div>
+
+          <!-- Pipeline 3: AI Knowledge Assistant Pipeline -->
+          <div class="bg-surfaceCard border border-surfaceBorder rounded-xl p-5 hover:border-slate-500 transition">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-3 h-3 rounded-full bg-purple-500"></span>
+              <h4 class="font-bold text-white text-base">3. Grounded AI Knowledge & Reasoning Stack</h4>
+              <span class="text-xs text-slate-400">(User Queries &rarr; Fact-Checked Answers)</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+              <div class="px-4 py-2 bg-charcoal rounded-lg border border-slate-700 text-xs text-slate-300 font-mono">
+                Student Query ("What is the semester exam attendance criteria?")
+              </div>
+              <span class="text-neonYellow font-bold">&rarr;</span>
+              <button onclick="openTopic(6)" class="px-4 py-2 bg-neonYellow/10 text-neonYellow hover:bg-neonYellow hover:text-charcoal rounded-lg border border-neonYellow text-xs font-bold transition">
+                Prompt Engineering (Structured System Framing)
+              </button>
+              <span class="text-neonYellow font-bold">&rarr;</span>
+              <button onclick="openTopic(7)" class="px-4 py-2 bg-neonYellow/10 text-neonYellow hover:bg-neonYellow hover:text-charcoal rounded-lg border border-neonYellow text-xs font-bold transition">
+                RAG (Searches College Handbook PDF Chunks)
+              </button>
+              <span class="text-neonYellow font-bold">&rarr;</span>
+              <button onclick="openTopic(2)" class="px-4 py-2 bg-neonYellow/10 text-neonYellow hover:bg-neonYellow hover:text-charcoal rounded-lg border border-neonYellow text-xs font-bold transition">
+                LLM (Drafts Clear, Courteous Response)
+              </button>
+              <span class="text-neonYellow font-bold">&rarr;</span>
+              <div class="px-4 py-2 bg-purple-950/70 border border-purple-700 text-purple-300 rounded-lg text-xs font-semibold">
+                Zero-Hallucination Verified Answer with Source Citations
+              </div>
+            </div>
+          </div>
+
+          <!-- Pipeline 4: Agentic Multi-Step Workflow -->
+          <div class="bg-surfaceCard border border-surfaceBorder rounded-xl p-5 hover:border-slate-500 transition">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+              <h4 class="font-bold text-white text-base">4. Autonomous Agentic Task Execution</h4>
+              <span class="text-xs text-slate-400">(High-Level Goal &rarr; Multi-Step Tool Calling)</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+              <div class="px-4 py-2 bg-charcoal rounded-lg border border-slate-700 text-xs text-slate-300 font-mono">
+                Goal: "Audit Inactive College Student Accounts & Archive Data"
+              </div>
+              <span class="text-neonYellow font-bold">&rarr;</span>
+              <button onclick="openTopic(5)" class="px-4 py-2 bg-neonYellow/10 text-neonYellow hover:bg-neonYellow hover:text-charcoal rounded-lg border border-neonYellow text-xs font-bold transition">
+                Agentic AI (Plans Steps 1, 2, 3)
+              </button>
+              <span class="text-neonYellow font-bold">&rarr;</span>
+              <div class="px-3 py-1.5 bg-charcoal border border-slate-700 rounded text-xs text-slate-300">
+                Authorized Read-Only Tool Execution
+              </div>
+              <span class="text-neonYellow font-bold">&rarr;</span>
+              <div class="px-3 py-1.5 bg-amber-950/80 border border-amber-600 text-amber-200 rounded text-xs font-bold">
+                ⚠️ Human-in-the-Loop Approval (Required Before Deletion)
+              </div>
+            </div>
+          </div>
+
+          <!-- Pipeline 5: Development & Security Rigor -->
+          <div class="bg-surfaceCard border border-surfaceBorder rounded-xl p-5 hover:border-slate-500 transition">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-3 h-3 rounded-full bg-red-500"></span>
+              <h4 class="font-bold text-white text-base">5. Code Assistance & Defensive Security</h4>
+              <span class="text-xs text-slate-400">(Writing Software &rarr; Hardening Production Systems)</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+              <button onclick="openTopic(8)" class="px-4 py-2 bg-neonYellow/10 text-neonYellow hover:bg-neonYellow hover:text-charcoal rounded-lg border border-neonYellow text-xs font-bold transition">
+                Blackbox AI / Coding Assistant
+              </button>
+              <span class="text-neonYellow font-bold">&rarr;</span>
+              <div class="px-3 py-1.5 bg-charcoal border border-slate-700 rounded text-xs text-slate-300">
+                Developer Manual Code Review & Unit Testing
+              </div>
+              <span class="text-neonYellow font-bold">&rarr;</span>
+              <button onclick="openTopic(9)" class="px-4 py-2 bg-neonYellow/10 text-neonYellow hover:bg-neonYellow hover:text-charcoal rounded-lg border border-neonYellow text-xs font-bold transition">
+                Ethical Hacking (Authorized Pentesting)
+              </button>
+              <span class="text-neonYellow font-bold">&rarr;</span>
+              <div class="px-4 py-2 bg-red-950/70 border border-red-700 text-red-300 rounded-lg text-xs font-semibold">
+                Hardened, Resilient Production System
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: INTERACTIVE 10-QUESTION QUIZ -->
+    <section id="view-quiz" class="hidden space-y-6">
+      <div class="bg-surface rounded-2xl border border-surfaceBorder p-6 sm:p-8">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 border-b border-surfaceBorder gap-4">
+          <div>
+            <span class="text-neonYellow text-xs font-mono uppercase tracking-wider block mb-1">Knowledge Validation</span>
+            <h2 class="text-3xl font-extrabold font-display text-white">Interactive Technology Quiz (10 Questions)</h2>
+            <p class="text-slate-400 text-xs sm:text-sm mt-1">One question per technology module with instant feedback and clear educational explanations.</p>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="text-right">
+              <div class="text-xs text-slate-400 font-mono">Current Score</div>
+              <div id="quiz-score-badge" class="text-2xl font-black font-display text-neonYellow">0 / 10</div>
+            </div>
+            <button onclick="restartQuiz()" class="px-4 py-2 rounded-xl bg-surfaceCard hover:bg-surfaceBorder border border-surfaceBorder text-xs text-slate-200 transition font-medium">
+              Restart Quiz
+            </button>
+          </div>
+        </div>
+
+        <div id="quiz-container" class="space-y-6 mt-6">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 5: CAPSTONE CHALLENGE -->
+    <section id="view-capstone" class="hidden space-y-6">
+      <div class="bg-surface rounded-2xl border border-surfaceBorder p-6 sm:p-10 space-y-8">
+        <div>
+          <span class="text-neonYellow text-xs font-mono uppercase tracking-wider block mb-1">Final Capstone Mini-Project Challenge</span>
+          <h2 class="text-3xl sm:text-4xl font-black font-display text-white">
+            Architecture Blueprint: AI-Powered College Helpdesk
+          </h2>
+          <p class="text-slate-300 text-sm sm:text-base mt-2 leading-relaxed">
+            <strong>Scenario:</strong> On a college portal, students ask questions regarding attendance policies, semester exam dates, department office hours, hostel curfew, and scholarship applications. The system must retrieve verified answers from official college handbooks without making up false dates or rules.
+          </p>
+        </div>
+
+        <!-- 8 Components Integration Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-surfaceCard p-4 rounded-xl border border-surfaceBorder space-y-2 hover:border-neonYellow/50 transition">
+            <div class="w-8 h-8 rounded-lg bg-yellow-400/20 text-neonYellow flex items-center justify-center font-bold text-xs font-mono">01</div>
+            <h4 class="font-bold text-white text-sm">Prompt Engineering</h4>
+            <p class="text-xs text-slate-300">Converts informal student questions (e.g., "when is last date to pay fees?") into structured queries with role constraints and tone instructions.</p>
+          </div>
+
+          <div class="bg-surfaceCard p-4 rounded-xl border border-surfaceBorder space-y-2 hover:border-neonYellow/50 transition">
+            <div class="w-8 h-8 rounded-lg bg-yellow-400/20 text-neonYellow flex items-center justify-center font-bold text-xs font-mono">02</div>
+            <h4 class="font-bold text-white text-sm">RAG (Knowledge Bank)</h4>
+            <p class="text-xs text-slate-300">Searches indexed vector chunks from the College Policy Handbook, Examination Circulars, and Hostel Rules PDF.</p>
+          </div>
+
+          <div class="bg-surfaceCard p-4 rounded-xl border border-surfaceBorder space-y-2 hover:border-neonYellow/50 transition">
+            <div class="w-8 h-8 rounded-lg bg-yellow-400/20 text-neonYellow flex items-center justify-center font-bold text-xs font-mono">03</div>
+            <h4 class="font-bold text-white text-sm">LLM (Language Engine)</h4>
+            <p class="text-xs text-slate-300">Synthesizes the retrieved circular excerpts into a courteous, accurate natural language response citing page numbers.</p>
+          </div>
+
+          <div class="bg-surfaceCard p-4 rounded-xl border border-surfaceBorder space-y-2 hover:border-neonYellow/50 transition">
+            <div class="w-8 h-8 rounded-lg bg-yellow-400/20 text-neonYellow flex items-center justify-center font-bold text-xs font-mono">04</div>
+            <h4 class="font-bold text-white text-sm">API Keys (Vault Secrets)</h4>
+            <p class="text-xs text-slate-300">Safely authenticates requests to external LLM providers and college databases from server-side environment variables.</p>
+          </div>
+
+          <div class="bg-surfaceCard p-4 rounded-xl border border-surfaceBorder space-y-2 hover:border-neonYellow/50 transition">
+            <div class="w-8 h-8 rounded-lg bg-yellow-400/20 text-neonYellow flex items-center justify-center font-bold text-xs font-mono">05</div>
+            <h4 class="font-bold text-white text-sm">Deployment (Cloud)</h4>
+            <p class="text-xs text-slate-300">Hosts the backend container and portal on secure cloud infrastructure for 24/7 student mobile accessibility.</p>
+          </div>
+
+          <div class="bg-surfaceCard p-4 rounded-xl border border-surfaceBorder space-y-2 hover:border-neonYellow/50 transition">
+            <div class="w-8 h-8 rounded-lg bg-yellow-400/20 text-neonYellow flex items-center justify-center font-bold text-xs font-mono">06</div>
+            <h4 class="font-bold text-white text-sm">Agentic AI (Workflows)</h4>
+            <p class="text-xs text-slate-300">Automatically creates support tickets, routes urgent grievance emails to the warden, and requires admin confirmation before taking action.</p>
+          </div>
+
+          <div class="bg-surfaceCard p-4 rounded-xl border border-surfaceBorder space-y-2 hover:border-neonYellow/50 transition">
+            <div class="w-8 h-8 rounded-lg bg-yellow-400/20 text-neonYellow flex items-center justify-center font-bold text-xs font-mono">07</div>
+            <h4 class="font-bold text-white text-sm">Ethical Hacking</h4>
+            <p class="text-xs text-slate-300">Conducts authorized security penetration tests to prevent student personal information leaks or unauthorized grading tampering.</p>
+          </div>
+
+          <div class="bg-surfaceCard p-4 rounded-xl border border-surfaceBorder space-y-2 hover:border-neonYellow/50 transition">
+            <div class="w-8 h-8 rounded-lg bg-yellow-400/20 text-neonYellow flex items-center justify-center font-bold text-xs font-mono">08</div>
+            <h4 class="font-bold text-white text-sm">Power BI / Tableau</h4>
+            <p class="text-xs text-slate-300">Displays real-time analytics for the College Principal: most frequently asked questions, peak grievance hours, and resolution times.</p>
+          </div>
+        </div>
+
+        <!-- Student Discussion Checkpoints -->
+        <div class="bg-surfaceCard/60 border border-neonYellow/30 p-6 rounded-xl space-y-3">
+          <h4 class="font-bold text-neonYellow text-sm font-display uppercase tracking-wider flex items-center gap-2">
+            <span>🛡️ Critical Engineering Questions for Students:</span>
+          </h4>
+          <ul class="list-disc list-inside text-xs sm:text-sm text-slate-300 space-y-2">
+            <li><strong>Hallucination Defense:</strong> If a student asks for the examination timetable before the official circular is published, what should the RAG assistant reply? <em>(It must respond: "The official circular has not yet been published by the examination cell," rather than hallucinating an arbitrary date.)</em></li>
+            <li><strong>Security Boundary:</strong> Why must the API Key for the LLM never be stored directly in client-side HTML or browser JavaScript? <em>(Anyone using 'Inspect Element' could extract the key and run unauthorized queries on your billing account.)</em></li>
+            <li><strong>Human Review Guardrail:</strong> Why should an AI agent not change a student's hostel room assignment or update grades without warden manual confirmation? <em>(Autonomous tools must have human-in-the-loop safeguards on destructive operations.)</em></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-surface border-t border-surfaceBorder px-4 lg:px-8 py-5 text-center text-xs text-slate-400 mt-10">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center space-x-2">
+        <span class="w-2 h-2 rounded-full bg-neonYellow inline-block animate-pulse"></span>
+        <span class="text-slate-300 font-medium">Technology Explorer Interactive Engine</span>
+        <span>&bull; English Edition &bull; Single-File Offline Ready</span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <button onclick="window.print()" class="hover:text-neonYellow transition">Print / Save as PDF</button>
+        <button onclick="downloadSelf()" class="hover:text-neonYellow transition font-medium flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          Export HTML
+        </button>
+      </div>
     </div>
+  </footer>
 
-    <!-- Floating Toast Notification -->
-    <div id="toastNotification" class="fixed bottom-6 z-[300] transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-slate-900/95 border border-amber-500/40 text-white text-xs sm:text-sm font-medium shadow-2xl backdrop-blur-xl">
-        <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
-        <span id="toastMessage">Message copied to clipboard! ✨</span>
-    </div>
+  <script>
+    /* Complete Knowledgebase for 10 Modules in 100% English */
+    const TOPICS_DATA = [
+      {
+        id: 0,
+        name: "Power BI",
+        category: "Data Analytics",
+        icon: "📊",
+        shortDesc: "Microsoft business intelligence platform converting raw data into interactive charts and dashboards.",
+        branches: {
+          what: {
+            title: "Definition & Overview",
+            subTitle: "What is Microsoft Power BI?",
+            definition: "Power BI is a business intelligence tool developed by Microsoft that ingests raw tables from Excel, SQL databases, and cloud services, cleans the records, models relationships, and converts numbers into intuitive, clickable charts, reports, and interactive dashboards.",
+            simpleExplanation: "In simple words: Instead of manually scrolling through thousands of rows in a messy spreadsheet, Power BI lets business managers see total revenue, popular items, and operational bottlenecks at a single glance on one screen.",
+            keyHighlights: ["Direct Excel & SQL Connectors", "Power Query ETL Engine", "DAX Formulas for Custom Metrics", "Interactive Cross-Filtering Dashboards"]
+          },
+          analogy: {
+            title: "Daily-Life Analogy",
+            subTitle: "The Monthly Household Budget Notebook",
+            analogyText: "Imagine tracking every single household rupee spent in a paper diary: groceries, milk, electricity, school fees, and fuel. At the end of the month, reading line-by-line is overwhelming.",
+            explanation: "If you categorize those expenses and turn them into a clean pie chart showing 40% on groceries, 25% on rent, and 10% on entertainment, you immediately see where money is leaking. Power BI does exactly this for companies with millions of transactions.",
+            keyHighlights: ["Categorized expense tracking", "Visual pie and bar breakdowns", "Instant identification of overspending"]
+          },
+          howItWorks: {
+            title: "How It Works (Step-by-Step Workflow)",
+            subTitle: "From Raw Spreadsheets to Published Dashboards",
+            workflowSteps: [
+              { step: "1. Connect Data", desc: "Connect Excel, CSV files, SQL databases, or web sources into Power BI Desktop." },
+              { step: "2. Clean with Power Query", desc: "Filter out empty cells, fix wrong date formats, and remove duplicate records." },
+              { step: "3. Relationships & DAX", desc: "Link Customer and Order tables; write DAX expressions to compute profit margins." },
+              { step: "4. Build Charts", desc: "Drag and drop cards, line graphs, bar charts, and interactive slicers onto the canvas." },
+              { step: "5. Publish & Refresh", desc: "Publish the report to Power BI Service cloud and schedule automatic data refreshes." }
+            ]
+          },
+          whereUsed: {
+            title: "Where Is It Used?",
+            subTitle: "Industry Use Cases",
+            useCases: [
+              { area: "Retail & Supermarkets", desc: "Discovering which products generate the highest profit margin and which need restocking." },
+              { area: "Banking & Finance", desc: "Tracking monthly expenditure, credit card transactions, and fraud anomalies." },
+              { area: "Hospitals & Healthcare", desc: "Monitoring daily patient visits, bed occupancy, and medicine inventories." },
+              { area: "Colleges & Universities", desc: "Evaluating student attendance percentages, exam mark distributions, and department rankings." },
+              { area: "E-Commerce Delivery", desc: "Highlighting delivery delays, transit times, and return rates by postal code." }
+            ]
+          },
+          whoUses: {
+            title: "Who Uses Power BI?",
+            subTitle: "Target Roles & Stakeholders",
+            rolesList: [
+              { role: "Data Analysts", desc: "Clean datasets, create relational data models, and write analytical queries." },
+              { role: "Business Analysts", desc: "Translate company questions into actionable visual dashboards." },
+              { role: "Operations Managers", desc: "Check daily shipments, delivery bottlenecks, and customer wait times." },
+              { role: "Finance Executives", desc: "Review quarterly balance sheets, revenue streams, and payroll overhead." }
+            ]
+          },
+          realLife: {
+            title: "Real-Life Example: Online Shopping Operations",
+            subTitle: "Amazon / Flipkart Delivery Performance Dashboard",
+            story: "Imagine an e-commerce platform processing 100,000 orders during a major festival sale across India. Customers order smartphones, clothes, and electronics. Some orders arrive on time; some get returned; some get stuck in transit.",
+            outcome: "On the Power BI dashboard, the regional director checks:\n• Total Gross Sales & Number of Orders\n• Best-Selling Product Categories\n• Return Percentage by Vendor\n• City-wise Delivery Speed\n\nDecision: The dashboard highlights that Bengaluru deliveries have an unexpected 22% delay due to depot overload. The operations team immediately re-routes shipments to an alternate warehouse, fixing customer dissatisfaction.",
+            freshnessNote: "Note on Data Freshness: A dashboard reflects data according to its scheduled refresh (e.g. hourly or daily). Not all reports are instant streaming unless configured with direct streaming pipelines."
+          },
+          demo: {
+            title: "Practical Demo: Student Marks & Attendance Dashboard",
+            subTitle: "College Academic Performance Tracker",
+            steps: [
+              "1. Import Excel table with columns: Student Name, Department, Marks, Attendance %.",
+              "2. In Power Query, replace missing mark entries with zero.",
+              "3. Create a Bar Chart comparing average marks across Computer Science, Electronics, and Mechanical.",
+              "4. Add a Department Slicer (dropdown filter) to filter all charts by department.",
+              "5. Add Card Visuals displaying Total Pass Rate and Average Attendance."
+            ],
+            codeSnippet: `// Sample DAX Measure for Student Pass Rate:
+PassPercentage = 
+DIVIDE(
+    CALCULATE(COUNTROWS(Students), Students[Marks] >= 50),
+    COUNTROWS(Students),
+    0
+) * 100`
+          },
+          prosConsCareers: {
+            title: "Advantages, Limitations & Careers",
+            subTitle: "Balanced Assessment & Industry Skills",
+            pros: [
+              "Very easy transition for users familiar with Microsoft Excel.",
+              "Seamless integration with Microsoft 365, Teams, SharePoint, and Azure.",
+              "Rich library of interactive visualizations and responsive drill-down filters."
+            ],
+            cons: [
+              "Pro and Premium capacities require recurring enterprise licensing fees.",
+              "Garbage-in, garbage-out: dirty or unmodeled data leads to misleading charts.",
+              "Handling extremely large uncompressed datasets (tens of millions of rows) can require dedicated memory optimization."
+            ],
+            careers: ["Power BI Developer", "Data Analyst", "BI Specialist", "Analytics Consultant"],
+            skills: ["Microsoft Excel", "SQL Queries", "Power Query (M Code)", "DAX Formulas", "Data Modeling"]
+          }
+        }
+      },
+      {
+        id: 1,
+        name: "Tableau",
+        category: "Data Analytics",
+        icon: "📈",
+        shortDesc: "Leading visual analytics platform known for intuitive drag-and-drop exploration and geographic mapping.",
+        branches: {
+          what: {
+            title: "Definition & Overview",
+            subTitle: "What is Tableau?",
+            definition: "Tableau (developed by Salesforce) is an industry-standard visual analytics and business intelligence platform powered by VizQL technology. It translates drag-and-drop visual actions on data dimensions and measures directly into relational database queries to build expressive charts, heatmaps, and spatial maps.",
+            simpleExplanation: "Tableau acts as an artistic magnifying glass for data. Instead of writing lines of code, you simply drag data fields onto a canvas, and Tableau instantly creates beautiful, responsive visualizations.",
+            keyHighlights: ["VizQL Visual Query Engine", "Superior Geographic & Map Intelligence", "Live & Hyper In-Memory Data Connectors", "Interactive Multi-Sheet Storyboards"]
+          },
+          analogy: {
+            title: "Daily-Life Analogy",
+            subTitle: "Comparing 3 Years of Electricity Bills",
+            analogyText: "Imagine looking at your family's electricity bills across all 12 months over 3 years.",
+            explanation: "In a numbers table, spotting subtle shifts is difficult. But in Tableau, a color heatmap instantly paints April and May in bright red (peak summer AC usage) and December in cool green. You immediately understand seasonal spikes without calculating averages manually.",
+            keyHighlights: ["Visual heatmaps spot anomalies", "Multi-year trend comparisons", "Instant recognition of patterns"]
+          },
+          howItWorks: {
+            title: "How It Works (Workflow)",
+            subTitle: "From Connection to Interactive Story",
+            workflowSteps: [
+              { step: "1. Connect to Data Source", desc: "Connect Excel, SQL, Salesforce CRM, BigQuery, or CSV files." },
+              { step: "2. Prepare Metadata", desc: "Classify attributes into Dimensions (categories) and Measures (numerical values)." },
+              { step: "3. Build Worksheets", desc: "Drag variables onto Rows and Columns shelves; VizQL renders the visual." },
+              { step: "4. Assemble Dashboards", desc: "Combine multiple worksheets together with shared interactive filter actions." },
+              { step: "5. Publish to Cloud / Server", desc: "Share dashboards with leadership teams across desktop and mobile devices." }
+            ]
+          },
+          whereUsed: {
+            title: "Where Is It Used?",
+            subTitle: "Practical Enterprise Environments",
+            useCases: [
+              { area: "Retail Supermarket Chains", desc: "Analyzing store performance across states, customer footfall, and seasonal discounts." },
+              { area: "Supply Chain & Logistics", desc: "Mapping GPS routes, shipment delays, and warehouse capacity utilization." },
+              { area: "Financial Services", desc: "Portfolio performance, investment risk heatmaps, and wealth distribution analytics." },
+              { area: "Government & Public Health", desc: "Tracking vaccination coverage, disease outbreaks, and demographic censuses." }
+            ]
+          },
+          whoUses: {
+            title: "Who Uses Tableau?",
+            subTitle: "Common Industry Professionals",
+            rolesList: [
+              { role: "Tableau Developers", desc: "Design high-performance executive dashboards and complex Level of Detail (LOD) calculations." },
+              { role: "Visual Data Storytellers", desc: "Present data narratives for public journals, boardrooms, and research publications." },
+              { role: "BI Consultants", desc: "Help companies structure fragmented data architectures into cohesive reports." }
+            ]
+          },
+          realLife: {
+            title: "Real-Life Example: Supermarket Regional Intelligence",
+            subTitle: "Multi-City Branch Revenue Optimization",
+            story: "A supermarket retail chain operates branches across Chennai, Bengaluru, Hyderabad, and Coimbatore. The general manager opens a Tableau map dashboard to assess performance.",
+            outcome: "• The geographic map highlights Chennai and Bengaluru in deep green (high profitability).\n• Clicking on Coimbatore reveals that dairy and packaged snack sales are booming, but cold dessert sales have plummeted.\n• Drilling down exposes that a commercial freezer breakdown had halted ice cream sales for two weeks.\nWith this visual insight, management fixes the refrigeration issue and adjusts supplier orders across branches.",
+            freshnessNote: "Strategic Value: Visual spatial heatmaps uncover operational issues that would remain invisible in standard flat tables."
+          },
+          demo: {
+            title: "Practical Demo & Comparison",
+            subTitle: "Power BI vs. Tableau Comparison Matrix",
+            steps: [
+              "1. Connect Superstore sales data into Tableau Desktop.",
+              "2. Drag 'Region' to Columns and 'Sales' to Rows to render horizontal bars.",
+              "3. Drag 'Profit Ratio' to Color to shade high-margin branches green and low-margin red.",
+              "4. Drag 'State' to the canvas to generate an interactive geographic map.",
+              "5. Combine both charts into a dashboard and set the map as a filter for the bar chart."
+            ],
+            comparisonTable: true
+          },
+          prosConsCareers: {
+            title: "Advantages, Limitations & Careers",
+            subTitle: "Trade-offs and Career Landscape",
+            pros: [
+              "Unmatched visual design freedom and aesthetic polish for executive storytelling.",
+              "Powerful native mapping and geographical boundary analysis.",
+              "Large, vibrant global community (Tableau Public) with shared visualization libraries."
+            ],
+            cons: [
+              "Steeper learning curve for advanced Level of Detail (LOD) calculations.",
+              "Higher enterprise licensing cost structure compared to standard office bundles.",
+              "Data preparation capabilities require additional tooling (such as Tableau Prep)."
+            ],
+            careers: ["Tableau Developer", "Data Visualization Specialist", "BI Architect", "Analytics Consultant"],
+            skills: ["Data Blending", "LOD Calculations", "SQL", "Dashboard UI/UX Design", "Tableau Prep"]
+          }
+        }
+      },
+      {
+        id: 2,
+        name: "Large Language Models (LLMs)",
+        category: "Artificial Intelligence",
+        icon: "🧠",
+        shortDesc: "Massive neural networks trained on broad textual datasets to interpret context and generate human language.",
+        branches: {
+          what: {
+            title: "Definition & Core Technology",
+            subTitle: "What is an LLM?",
+            definition: "A Large Language Model (LLM) is an artificial intelligence model based on deep neural network architectures (primarily the Transformer architecture with self-attention mechanisms). Trained on hundreds of billions of words from books, articles, code, and websites, it learns to understand context and predict the most statistically probable next words in a sequence.",
+            simpleExplanation: "An LLM is not a conscious human brain; it is an ultra-advanced autocomplete engine that has learned grammar, facts, and logical patterns of human communication by reading immense amounts of text.",
+            keyHighlights: ["Transformer Architecture", "Self-Attention Mechanism", "Probabilistic Next-Token Predictor", "Pre-trained on Billions of Parameters"]
+          },
+          analogy: {
+            title: "Daily-Life Analogy",
+            subTitle: "The Brilliant Friend with an Encyclopedic Memory",
+            analogyText: "Imagine a classmate who has read every textbook in the central library from cover to cover.",
+            explanation: "If you ask them about physics equations or Shakespearean plays, they can write a brilliant summary in seconds. However, because they have spent their entire life inside the library without windows, if you ask what happened in your town this morning, they might invent a convincing story rather than admitting they do not know. This risk of confident mistake is called an 'AI Hallucination'.",
+            keyHighlights: ["Vast read knowledge", "No direct real-time vision unless connected to live tools", "Risk of confident hallucinations"]
+          },
+          howItWorks: {
+            title: "How It Works (Transformer Pipeline)",
+            subTitle: "From Words to Tokens to Generated Answers",
+            workflowSteps: [
+              { step: "1. Tokenization", desc: "User prompt text is broken into small numerical tokens (words or sub-words)." },
+              { step: "2. Vector Embeddings", desc: "Tokens are mapped into high-dimensional geometric semantic space representing concepts." },
+              { step: "3. Multi-Head Attention", desc: "The Transformer calculates which words in the prompt relate to one another." },
+              { step: "4. Next-Token Prediction", desc: "The model calculates probability distributions to select the next most suitable word." },
+              { step: "5. Human Verification", desc: "A human reviews the response because LLMs can produce believable false statements." }
+            ]
+          },
+          whereUsed: {
+            title: "Where Is It Used?",
+            subTitle: "Real-World LLM Applications",
+            useCases: [
+              { area: "Customer Service Chatbots", desc: "Answering customer queries, providing return guidelines, and booking appointments." },
+              { area: "Software Engineering", desc: "Drafting code, generating unit tests, and explaining complex legacy codebases." },
+              { area: "Document Summarization", desc: "Distilling 80-page legal contracts or financial audits into bullet points in seconds." },
+              { area: "Language Translation", desc: "Translating conversational nuances between global languages while maintaining context." }
+            ]
+          },
+          whoUses: {
+            title: "Who Uses LLMs?",
+            subTitle: "Industry Roles Benefiting from LLMs",
+            rolesList: [
+              { role: "Software Developers", desc: "Use coding assistants to write boilerplate syntax, debug errors, and discover APIs." },
+              { role: "Customer Support Teams", desc: "Automate tier-1 customer inquiries while escalating edge cases to human reps." },
+              { role: "Researchers & Students", desc: "Summarize research papers, practice foreign languages, and brainstorm topics." }
+            ]
+          },
+          realLife: {
+            title: "Real-Life Example: Customer Support & Live Grounding",
+            subTitle: "Tracking an Order with Real-Time Systems",
+            story: "A customer types into an online shopping chat: 'Where is my order right now?'",
+            outcome: "• The LLM interprets the customer's intent and extracts their order number.\n• However, the LLM alone cannot guess where the delivery package is.\n• The system must query an authorized shipping database API to retrieve the real status ('Out for delivery in Chennai').\n• The LLM then formulates a polite, clear response: 'Your order #1089 is currently out for delivery in Chennai and is estimated to arrive by 4:00 PM.'\n\nKey Lesson: An LLM must be paired with real-world databases to deliver factual truths; otherwise, it will invent plausible-sounding falsehoods.",
+            freshnessNote: "Fact Check Guardrail: Never rely on an ungrounded LLM for personal order statuses, bank balances, or live flight timings."
+          },
+          demo: {
+            title: "Practical Demo: College FAQ Assistant",
+            subTitle: "Safe Grounded Helpdesk Prompt Architecture",
+            steps: [
+              "1. Provide verified college handbook excerpts directly inside the system prompt.",
+              "2. Instruct the model strictly: 'Answer using ONLY the provided text.'",
+              "3. Enforce fallback behavior: 'If the text does not contain the answer, reply that you do not know.'",
+              "4. Test with sample queries: 'What time does the college office open?' and 'Where is the library?'"
+            ],
+            codeSnippet: `# Python / Conceptual LLM Prompt Guardrail
+system_prompt = """
+You are ABC College Assistant.
+Strict Rule: Use ONLY the provided context below to answer student queries.
+If the answer is not present in the context, explicitly state:
+"I am sorry, but that information is not available in the official handbook. Please contact the college office."
+Do not invent opening hours or exam dates under any circumstances.
+"""`
+          },
+          prosConsCareers: {
+            title: "Advantages, Limitations & Careers",
+            subTitle: "Capabilities, Risks and Job Opportunities",
+            pros: [
+              "Understands unstructured, conversational human language naturally.",
+              "Dramatically increases productivity across writing, brainstorming, and coding.",
+              "Can adapt to diverse domains through contextual prompting."
+            ],
+            cons: [
+              "Hallucinations: States incorrect statements with high grammatical confidence.",
+              "Data Privacy: Proprietary or sensitive student/company data sent to public models can risk exposure.",
+              "High computational expense to train and fine-tune large foundation models."
+            ],
+            careers: ["Generative AI Developer", "LLM Application Engineer", "NLP Specialist", "AI Safety Analyst"],
+            skills: ["Python", "Hugging Face", "PyTorch", "Prompt Engineering", "Vector Embeddings", "LangChain"]
+          }
+        }
+      },
+      {
+        id: 3,
+        name: "API Keys",
+        category: "Software & Cloud",
+        icon: "🔑",
+        shortDesc: "Secret credential tokens used to identify, authenticate, and authorize software application requests.",
+        branches: {
+          what: {
+            title: "Definition & Security Purpose",
+            subTitle: "What is an API Key?",
+            definition: "An API (Application Programming Interface) Key is a unique alphanumeric credential string issued by an online service (such as Google Maps, OpenAI, or a payment gateway). An application attaches this key to its HTTP request headers so the receiving server can verify identity, check access permissions, track usage quotas, and apply billing.",
+            simpleExplanation: "An API Key is like a digital ID card for apps. It allows your software to communicate with a remote service without requiring a person to type in a username and password every single second.",
+            keyHighlights: ["Alphanumeric Secret String", "Header or Query Authentication", "Rate Limiting & Quota Management", "Access Scoping & Revocation"]
+          },
+          analogy: {
+            title: "Daily-Life Analogy",
+            subTitle: "The Office Building Visitor Badge",
+            analogyText: "Imagine visiting a high-security corporate office building.",
+            explanation: "At reception, security confirms your appointment and issues a Visitor Badge. When you tap the badge at the turnstile, doors open. However, that badge only lets you enter the 3rd floor meeting room; it does not give you access to the server room or the CEO's office. Similarly, an API Key grants an application permission to access specific endpoints while keeping other data locked.",
+            keyHighlights: ["Identifies the guest application", "Restricts access to approved resources", "Can be immediately cancelled if lost"]
+          },
+          howItWorks: {
+            title: "How It Works (Request Workflow)",
+            subTitle: "The Path of an Authorized HTTPS Request",
+            workflowSteps: [
+              { step: "1. App Prepares Request", desc: "Your backend server constructs an HTTP request (e.g. asking for weather data)." },
+              { step: "2. Attach Secret Header", desc: "The server attaches the secret API key into the 'Authorization' HTTP header." },
+              { step: "3. Provider Validates Key", desc: "The external service checks: Is this key valid? Is the account active? Is quota remaining?" },
+              { step: "4. Return JSON Data", desc: "If valid, the service returns data. If invalid, it returns an HTTP 401 Unauthorized error." },
+              { step: "5. Log Quota & Billing", desc: "The provider's accounting system increments the request counter by one." }
+            ]
+          },
+          whereUsed: {
+            title: "Where Is It Used?",
+            subTitle: "Common Everyday Services Powered by APIs",
+            useCases: [
+              { area: "Map & Navigation Systems", desc: "Food delivery apps (Swiggy, Zomato) querying Google Maps or Mapbox for live route estimates." },
+              { area: "Payment Gateways", desc: "E-commerce stores passing transaction requests to Stripe, Razorpay, or PayPal." },
+              { area: "SMS & Communication", desc: "Banking apps sending OTP verification messages through Twilio or AWS SNS." },
+              { area: "Generative AI APIs", desc: "Web applications querying OpenAI or Anthropic models for text summaries." }
+            ]
+          },
+          whoUses: {
+            title: "Who Uses API Keys?",
+            subTitle: "Key Technical Stakeholders",
+            rolesList: [
+              { role: "Backend Developers", desc: "Store credentials securely in server environments and configure HTTP client libraries." },
+              { role: "DevOps & Cloud Engineers", desc: "Manage secret vaults, set up automatic key rotation, and monitor API consumption costs." },
+              { role: "Security Administrators", desc: "Audit code repositories to verify that no secret keys have been accidentally exposed." }
+            ]
+          },
+          realLife: {
+            title: "Real-Life Example: Weather Application",
+            subTitle: "Fetching City Weather Without Running Satellite Stations",
+            story: "You open a smartphone weather app to check if it will rain in Chennai today. Your phone does not own weather satellites or atmospheric radar stations.",
+            outcome: "1. The weather app backend sends a secure HTTPS request to a weather data service.\n2. The request includes the app's secret API key in the header.\n3. The weather service authenticates the request and returns the current temperature and rainfall probability in JSON format.\n4. The mobile app renders the graphics on your screen.\n5. The weather service increments the app owner's monthly billing counter.",
+            freshnessNote: "Billing Guardrail: If an app runs out of monthly quota or the account runs out of credits, requests are immediately blocked with rate-limit errors."
+          },
+          demo: {
+            title: "Practical Demo & Critical Security Warning",
+            subTitle: "Safe Server-Side Request with Environment Variables",
+            steps: [
+              "1. Never hardcode credentials in frontend JavaScript, HTML, or mobile app source code.",
+              "2. Store API keys in server environment variables (.env files) or cloud secret managers.",
+              "3. Add your .env file into .gitignore so Git repositories never track secret files.",
+              "4. Set up usage spending limits and automated alerts on your provider dashboard."
+            ],
+            codeSnippet: `// SAFE PATTERN (Node.js / Express Server-Side):
+// Load secret from environment variable - NEVER hardcode in frontend!
+const API_KEY = process.env.WEATHER_API_KEY; 
 
-    <!-- Footer -->
-    <footer class="relative z-10 text-center py-3 text-xs text-slate-500 font-normal">
-        <p>Crafted with love • Share this link with someone special 💖</p>
-    </footer>
+fetch("https://api.weatherprovider.com/v1/current?city=Chennai", {
+  method: "GET",
+  headers: {
+    "Authorization": "Bearer " + "YOUR_API_KEY_HERE" // Safe placeholder only!
+  }
+})
+.then(response => response.json())
+.then(data => console.log("Current Temp:", data.temperature_c));`
+          },
+          prosConsCareers: {
+            title: "Advantages, Limitations & Careers",
+            subTitle: "Simplicity, Security Governance, and Career Roles",
+            pros: [
+              "Extremely simple to integrate into standard HTTP request headers.",
+              "Enables precise per-application billing, rate-limiting, and analytics.",
+              "Can be revoked and regenerated immediately if a leak is suspected."
+            ],
+            cons: [
+              "Bearer Token Risk: Anyone who obtains the string has full access until it is revoked.",
+              "Lacks granular user session context compared to OAuth 2.0 or JWT tokens.",
+              "Vulnerable to automated web-crawlers if mistakenly committed into public GitHub repositories."
+            ],
+            careers: ["Backend Developer", "API Integration Specialist", "Cloud Security Engineer", "Full-Stack Engineer"],
+            skills: ["RESTful APIs", "HTTP Protocol", "Environment Variables (.env)", "Secret Managers (AWS/Vault)", "Postman"]
+          }
+        }
+      },
+      {
+        id: 4,
+        name: "Deployment",
+        category: "Software & Cloud",
+        icon: "🚀",
+        shortDesc: "The engineering process of moving software from local development onto live cloud servers for public access.",
+        branches: {
+          what: {
+            title: "Definition & Lifecycle",
+            subTitle: "What is Software Deployment?",
+            definition: "Software deployment encompasses all of the activities and processes that make a software application available for target users. It transitions code that runs exclusively on a developer's private laptop (localhost) into a resilient, continuously operating system hosted on cloud servers (such as AWS, Azure, Vercel, or Render) with public domain names and configured databases.",
+            simpleExplanation: "Developing software is like cooking food in the kitchen. Deployment is carrying the finished dishes out into the restaurant dining room so hungry customers can finally enjoy the meal.",
+            keyHighlights: ["Moving from Localhost to Public Cloud", "Build, Test, and Containerization", "Environment Variables & Port Binding", "Zero-Downtime Releases"]
+          },
+          analogy: {
+            title: "Daily-Life Analogy",
+            subTitle: "Writing a Manuscript vs. Printing Book Copies",
+            analogyText: "Imagine writing a novel in your personal diary at home.",
+            explanation: "As long as it stays in your room, you are the only person who can read it (Local Development). To share it with thousands of readers across the country, you must send it to a printing press, bind copies, and distribute them to bookstores nationwide. That publishing and delivery process is deployment.",
+            keyHighlights: ["Writing in diary = Local coding", "Proofreading = Staging QA tests", "Book in stores = Production deployment"]
+          },
+          howItWorks: {
+            title: "How It Works (Deployment Stages)",
+            subTitle: "From Git Commit to Production Environment",
+            workflowSteps: [
+              { step: "1. Local Development", desc: "Engineers write code and verify functionality on their personal laptops (localhost:3000)." },
+              { step: "2. Git Push & CI/CD", desc: "Code is pushed to GitHub; automated pipelines run unit tests to check for bugs." },
+              { step: "3. Staging Environment", desc: "A private test replica of production verifies that database migrations work cleanly." },
+              { step: "4. Production Environment", desc: "Live containers or servers receive the update under a verified domain with SSL certificates." },
+              { step: "5. Monitoring & Logging", desc: "Real-time metrics monitor server memory, CPU spikes, error logs, and uptime 24/7." }
+            ]
+          },
+          whereUsed: {
+            title: "Where Is It Used?",
+            subTitle: "Deployment Across Industry Verticals",
+            useCases: [
+              { area: "College Examination Portals", desc: "Deploying high-concurrency servers to handle simultaneous exam result checks by 50,000 students." },
+              { area: "E-Commerce Platforms", desc: "Rolling out flash sale features with zero system downtime during peak shopping hours." },
+              { area: "Mobile Application Backends", desc: "Serving live REST APIs that deliver data to millions of smartphone apps simultaneously." },
+              { area: "Financial Systems", desc: "Deploying banking microservices with strict compliance, automated failover, and redundancy." }
+            ]
+          },
+          whoUses: {
+            title: "Who Handles Deployment?",
+            subTitle: "Specialized Roles in the Software Industry",
+            rolesList: [
+              { role: "DevOps Engineers", desc: "Design automated CI/CD deployment pipelines using GitHub Actions, Docker, and Kubernetes." },
+              { role: "Cloud Engineers", desc: "Configure cloud infrastructure, DNS routing, load balancers, and firewall policies." },
+              { role: "Site Reliability Engineers (SRE)", desc: "Maintain 99.99% server availability, monitor latency, and execute automated rollbacks." }
+            ]
+          },
+          realLife: {
+            title: "Real-Life Example: College Symposium Registration",
+            subTitle: "Transitioning a Student Project to a Live Website",
+            story: "A student develops a registration website for an inter-college technical symposium using HTML, CSS, and Python Flask. On their laptop, the site runs at http://localhost:5000.",
+            outcome: "• If they text that link to friends at another college, nobody else can open it because localhost exists only on their private computer.\n• The student commits the project to GitHub and connects it to a cloud hosting platform (such as Render or Vercel).\n• The cloud platform installs dependencies, assigns an SSL certificate, and issues a live URL: https://abccollege-symposium.com.\n• Now, 5,000 students across the state can register from their smartphones at any hour of the day.",
+            freshnessNote: "Key Lesson: Software is only useful to others once it is reliably deployed to an accessible public environment."
+          },
+          demo: {
+            title: "Practical Demo: Basic Deployment Checklist",
+            subTitle: "Essential Steps for Launching a Web Application",
+            steps: [
+              "1. Initialize Git repository and commit all clean source files.",
+              "2. Push repository to GitHub or GitLab.",
+              "3. Configure Cloud Platform (e.g. Render, Vercel, Railway, or AWS).",
+              "4. Set Environment Variables (DATABASE_URL, JWT_SECRET, PORT).",
+              "5. Define Build & Start commands (e.g., npm run build && npm start).",
+              "6. Test live public HTTPS URL and verify error logging."
+            ],
+            codeSnippet: `# Quick Terminal Deployment Workflow:
+# 1. Commit changes locally
+git init
+git add .
+git commit -m "Production release v1.0.0"
 
-    <script>
-        /* 1. Web Audio API Synthesis */
-        let audioCtx = null;
-        let isSoundEnabled = true;
+# 2. Push to remote repository
+git branch -M main
+git remote add origin https://github.com/student/symposium-portal.git
+git push -u origin main
 
-        function initAudio() {
-            if (!audioCtx) {
-                const AudioContext = window.AudioContext || window.webkitAudioContext;
-                audioCtx = new AudioContext();
-            }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+# 3. Environment Variables in Cloud Dashboard:
+# NODE_ENV=production
+# PORT=8080
+# DATABASE_URL=postgres://user:password@cloud-db.com:5432/symposium`
+          },
+          prosConsCareers: {
+            title: "Advantages, Limitations & Careers",
+            subTitle: "Benefits, Challenges and Career Pathways",
+            pros: [
+              "Makes applications instantly accessible to users worldwide 24/7.",
+              "Modern cloud auto-scales computing resources during unexpected traffic spikes.",
+              "Automated rollbacks allow quick recovery if a new code commit contains an unexpected bug."
+            ],
+            cons: [
+              "Configuration oversights can cause sudden server downtime or security leaks.",
+              "Unmonitored cloud resources can trigger unexpected monthly hosting bills.",
+              "Public-facing production servers require vigilant patching against network vulnerabilities."
+            ],
+            careers: ["DevOps Engineer", "Cloud Infrastructure Architect", "Site Reliability Engineer (SRE)", "Release Manager"],
+            skills: ["Docker & Containers", "Linux Administration", "CI/CD (GitHub Actions)", "Cloud Platforms (AWS/Azure/GCP)", "Kubernetes"]
+          }
+        }
+      },
+      {
+        id: 5,
+        name: "Agentic AI",
+        category: "Artificial Intelligence",
+        icon: "🤖",
+        shortDesc: "Autonomous AI systems designed to plan multi-step workflows, execute tools, observe results, and self-correct.",
+        branches: {
+          what: {
+            title: "Definition & Autonomous Nature",
+            subTitle: "What is Agentic AI?",
+            definition: "Agentic AI refers to artificial intelligence architectures designed to pursue complex, multi-step goals autonomously. Unlike conversational chatbots that merely output text responses, an AI Agent breaks an overarching objective into sub-tasks, selects and executes approved software tools (calculators, web browsers, database queries, terminal commands), observes the results, self-corrects errors, and iterates until the goal is achieved.",
+            simpleExplanation: "A standard chatbot is like an advisor who answers questions when asked. An AI Agent is like a proactive assistant who you assign a project to, and who goes off to complete the required steps using approved software tools.",
+            keyHighlights: ["Autonomous Goal Decomposition", "Tool / Function Calling", "Perception-Action-Reflection Loop", "Human-in-the-Loop Safeguards"]
+          },
+          analogy: {
+            title: "Daily-Life Analogy",
+            subTitle: "Booking an Emergency Train Ticket on IRCTC",
+            analogyText: "Imagine needing an emergency train ticket for tomorrow morning.",
+            explanation: "If you ask a basic chatbot: 'When does the train leave?', it simply states the departure time. But if you assign an AI Agent the goal: 'Book me a Tatkal ticket to Madurai tomorrow':\n1. It searches IRCTC train schedules.\n2. It verifies ticket availability.\n3. It fills out passenger names.\n4. It pauses at the final payment step to ask for your manual OTP confirmation before charging your card.\nThat complete multi-step autonomous execution is the power of Agentic AI.",
+            keyHighlights: ["Autonomous multi-step planning", "Pauses for human approval on financial transactions", "Executes full end-to-end task"]
+          },
+          howItWorks: {
+            title: "How It Works (Agentic Loop)",
+            subTitle: "The ReAct (Reasoning + Acting) Execution Cycle",
+            workflowSteps: [
+              { step: "1. Goal Intake", desc: "User supplies a high-level goal: 'Analyze student fail rates and email the HOD a summary report'." },
+              { step: "2. Step Planning", desc: "The agent plans sequential actions: Query database &rarr; Compute percentages &rarr; Draft email." },
+              { step: "3. Tool Execution", desc: "Agent calls an approved database connector tool to fetch marks." },
+              { step: "4. Observation & Correction", desc: "If a database query returns a syntax error, the agent diagnoses the issue and retries." },
+              { step: "5. Human Approval Lock", desc: "The agent halts and asks a human supervisor to confirm before sending the final email." }
+            ]
+          },
+          whereUsed: {
+            title: "Where Is It Used?",
+            subTitle: "Enterprise Autonomous Agent Scenarios",
+            useCases: [
+              { area: "IT Support Helpdesks", desc: "Diagnosing computer network errors, resetting credentials, and verifying device compliance." },
+              { area: "Financial Research", desc: "Gathering quarterly earnings reports, compiling competitor benchmarks, and drafting summaries." },
+              { area: "Software Engineering", desc: "Scanning code repositories for known security flaws, opening pull requests, and running tests." },
+              { area: "Supply Chain Operations", desc: "Monitoring inventory levels, contacting suppliers when stock drops, and tracking reorders." }
+            ]
+          },
+          whoUses: {
+            title: "Who Uses Agentic AI?",
+            subTitle: "Target Stakeholders",
+            rolesList: [
+              { role: "Enterprise Automation Engineers", desc: "Build agent workflows that automate repetitive multi-department business processes." },
+              { role: "Software Architects", desc: "Set strict tool-calling permissions and security guardrails to prevent runaway loops." },
+              { role: "Operations Directors", desc: "Supervise autonomous agents managing high-volume data validation tasks." }
+            ]
+          },
+          realLife: {
+            title: "Real-Life Example: Enterprise IT Password Helpdesk",
+            subTitle: "Automating Secure Account Recovery",
+            story: "An employee at a large company forgets their account password and messages the internal support channel: 'I am locked out of my corporate laptop.'",
+            outcome: "1. The AI Agent analyzes the request and initiates the approved identity verification process.\n2. It sends a secure verification code to the employee's registered mobile phone.\n3. Once verified, the agent executes an authorized Active Directory tool to generate a temporary one-time password.\n4. It sends the temporary password through a secure channel.\n5. If the user had failed identity verification, the agent would halt immediately and escalate the incident to human security staff.\n\nMandatory Security Rule: Agents must never modify account credentials without verified authentication and audited human guardrails.",
+            freshnessNote: "Safety Guardrail: Sensitive actions (such as account deletions or financial transfers) must always require explicit Human-in-the-Loop approval."
+          },
+          demo: {
+            title: "Practical Demo: Task Planning Architecture",
+            subTitle: "Conceptual Autonomous Agent with Human Approval Locks",
+            steps: [
+              "1. Define available tools (e.g., ReadStudentDB, GenerateReport, SendNotification).",
+              "2. Set sensitive flags on tools that modify state or send messages.",
+              "3. Structure the agent execution loop: Plan &rarr; Act &rarr; Observe &rarr; Review.",
+              "4. Ensure the loop halts whenever human confirmation is required."
+            ],
+            codeSnippet: `// Conceptual Agentic Execution Loop (LangChain / AutoGen Pattern)
+async function executeAgentTask(userGoal) {
+  const plan = await agentPlanner.createStepPlan(userGoal);
+  
+  for (const step of plan) {
+    console.log("Current Step:", step.description);
+    
+    // Safety Guardrail: Require human confirmation for sensitive actions
+    if (step.requiresHumanApproval) {
+      const isApproved = await requestHumanSupervisorApproval(step);
+      if (!isApproved) {
+        return "Action halted: Human supervisor denied authorization.";
+      }
+    }
+    
+    // Execute authorized tool and observe result
+    const observation = await toolRegistry.invoke(step.toolName, step.parameters);
+    agentMemory.record(step, observation);
+  }
+  
+  return "Goal successfully accomplished!";
+}`
+          },
+          prosConsCareers: {
+            title: "Advantages, Limitations & Careers",
+            subTitle: "Productivity, Safety Concerns and Career Horizons",
+            pros: [
+              "Automates complex, multi-step business workflows that require multiple software tools.",
+              "Can self-diagnose minor errors and dynamically adjust plans without giving up.",
+              "Operates continuously across routine administrative and diagnostic tasks."
+            ],
+            cons: [
+              "Runaway Loop Risk: An improperly bounded agent can get stuck in infinite execution loops.",
+              "Security Exposure: Granting unmonitored write or delete permissions can corrupt databases.",
+              "Requires strict Human-in-the-Loop policies for all sensitive and high-stakes operations."
+            ],
+            careers: ["AI Agent Architect", "Agentic Systems Engineer", "Cognitive Automation Developer", "Enterprise AI Specialist"],
+            skills: ["LangChain & LangGraph", "CrewAI & AutoGen", "Function Calling APIs", "Tool Integration", "System Architecture"]
+          }
+        }
+      },
+      {
+        id: 6,
+        name: "Prompt Engineering",
+        category: "Artificial Intelligence",
+        icon: "✍️",
+        shortDesc: "The methodical practice of structuring, refining, and constraining inputs to steer AI models to reliable results.",
+        branches: {
+          what: {
+            title: "Definition & Core Framework",
+            subTitle: "What is Prompt Engineering?",
+            definition: "Prompt Engineering is the practice of methodically designing, structuring, and refining natural language inputs given to generative AI models to maximize output accuracy, relevance, and formatting consistency. A well-engineered prompt supplies persona context, explicit task objectives, few-shot examples, negative constraints, and specified output schemas (such as JSON or markdown tables).",
+            simpleExplanation: "If you give vague instructions to an intern, you receive messy work. If you give precise guidelines with clear examples and boundaries, you receive excellent work. Prompt engineering is simply providing precise guidelines to an AI model.",
+            keyHighlights: ["System Role Framing", "Few-Shot Demonstrations", "Negative Constraints (What NOT to do)", "Structured Output Formatting"]
+          },
+          analogy: {
+            title: "Daily-Life Analogy",
+            subTitle: "Ordering a Tailor-Made College Blazer",
+            analogyText: "Imagine walking into a tailor shop and simply saying: 'Stitch me a coat.'",
+            explanation: "The tailor will stitch whatever style they like, and it probably will not fit your college dress code. But if you provide exact measurements (chest size, shoulder width), specify the fabric, pick the navy blue color, and state that it must have two brass buttons and a college crest pocket, the result is perfect. Prompt engineering provides those exact measurements to AI.",
+            keyHighlights: ["Vague request = Poor fit", "Detailed measurements = Perfect result", "Saves time and eliminates wasted iterations"]
+          },
+          howItWorks: {
+            title: "How It Works (Framework)",
+            subTitle: "The Standard Anatomy of a High-Performance Prompt",
+            workflowSteps: [
+              { step: "1. Define Persona", desc: "Assign role context: 'Act as a Senior Academic Placement Officer at a technical college.'" },
+              { step: "2. State Objective", desc: "Define the core task: 'Review this student resume for junior Python developer roles.'" },
+              { step: "3. Provide Context", desc: "Include background data, target job description requirements, and student coursework." },
+              { step: "4. Specify Format", desc: "Demand structured output: Markdown bullet points, a comparative table, or clean JSON." },
+              { step: "5. Add Constraints", desc: "Enforce boundaries: 'Do not use technical jargon; limit response to 200 words; do not invent credentials.'" }
+            ]
+          },
+          whereUsed: {
+            title: "Where Is It Used?",
+            subTitle: "Everyday Applications Across AI Products",
+            useCases: [
+              { area: "Automated Code Generation", desc: "Instructing LLMs to produce secure, documented Python functions with unit tests." },
+              { area: "Customer Service Pipelines", desc: "Ensuring AI chatbots remain polite, stay within company policy, and never promise discounts." },
+              { area: "Academic Summarization", desc: "Distilling complex research papers into simplified revision guides for undergraduates." },
+              { area: "Structured Data Extraction", desc: "Parsing unstructured medical notes or email receipts into strict JSON database schemas." }
+            ]
+          },
+          whoUses: {
+            title: "Who Uses Prompt Engineering?",
+            subTitle: "The Modern Workforce",
+            rolesList: [
+              { role: "AI Application Developers", desc: "Write production system prompts that guide LLMs inside enterprise software." },
+              { role: "Content & Education Designers", desc: "Create interactive learning assistants tailored to students' grade levels." },
+              { role: "Business Professionals", desc: "Draft executive summaries, marketing copy, and customer outreach emails." }
+            ]
+          },
+          realLife: {
+            title: "Real-Life Example: Before vs. After Prompts",
+            subTitle: "Transforming Vague Questions into High-Value Responses",
+            story: "Comparing the dramatic difference in output quality when a question is engineered methodically.",
+            comparisonPrompts: true,
+            freshnessNote: "Fact Check Reality: A well-crafted prompt significantly improves relevance and format, but it cannot guarantee 100% factual correctness if the model lacks knowledge."
+          },
+          demo: {
+            title: "Practical Demo: Code Generation Prompt",
+            subTitle: "Production Prompt Template for Bug-Free Code",
+            steps: [
+              "1. Define the programming language and runtime environment.",
+              "2. State the required function inputs and outputs.",
+              "3. Specify edge-case handling rules (e.g. empty lists, negative values).",
+              "4. Demand inline explanatory comments and unit test cases."
+            ],
+            codeSnippet: `// Production-Grade Prompt Template for Code Generation:
+[ROLE]: You are an expert Python data engineering instructor.
+[TASK]: Write a Python function that calculates average marks from a dictionary of students.
+[CONSTRAINTS]:
+- Gracefully handle empty student dictionaries without raising ZeroDivisionError.
+- Raise a ValueError if any student mark is less than 0 or greater than 100.
+- Include line-by-line comments explaining your logic.
+- Provide 2 unit test cases demonstrating normal and edge cases.
+- Return ONLY runnable Python code inside a markdown block.`
+          },
+          prosConsCareers: {
+            title: "Advantages, Limitations & Careers",
+            subTitle: "High-ROI Skill and Professional Realities",
+            pros: [
+              "Requires zero software coding experience to get started; natural language is the interface.",
+              "Dramatically reduces hallucinations and irrelevant rambling in AI responses.",
+              "Improves system consistency and reliability across enterprise AI applications."
+            ],
+            cons: [
+              "Prompt engineering cannot fix a model's underlying knowledge cut-off or blind spots.",
+              "Different models (GPT-4 vs Claude 3.5 vs Llama 3) respond differently to the exact same prompt.",
+              "Prompts can be vulnerable to 'Prompt Injection' attacks if untrusted user inputs are not sanitized."
+            ],
+            careers: ["Prompt Engineer", "Generative AI Solutions Consultant", "AI Interaction Designer", "Workflow Automation Specialist"],
+            skills: ["Chain-of-Thought (CoT) Prompting", "Few-Shot Examples", "JSON Schema Definition", "Evaluation Benchmarking"]
+          }
+        }
+      },
+      {
+        id: 7,
+        name: "RAG – Retrieval-Augmented Generation",
+        category: "Artificial Intelligence",
+        icon: "📚",
+        shortDesc: "Architecture that retrieves relevant passages from external private knowledge bases to ground LLM answers in verified facts.",
+        branches: {
+          what: {
+            title: "Definition & Grounding Purpose",
+            subTitle: "What is RAG?",
+            definition: "Retrieval-Augmented Generation (RAG) is an AI architecture that equips an LLM with an external search engine. When a user asks a question, the system first retrieves relevant chunks from private documents (PDFs, circulars, customer manuals, policy handbooks), feeds those passages into the prompt context, and instructs the LLM to formulate an answer strictly based on that retrieved evidence.",
+            simpleExplanation: "RAG solves AI hallucinations. Instead of relying solely on the AI's memorized training data, RAG looks up the exact page in your company's private policy book and hands it to the AI to read before it answers.",
+            keyHighlights: ["Vector Embeddings & Semantic Search", "Document Chunking & Vector Databases", "Eliminates Outdated Memorized Facts", "Includes Direct Source Document Citations"]
+          },
+          analogy: {
+            title: "Daily-Life Analogy",
+            subTitle: "Closed-Book vs. Open-Book Examination",
+            analogyText: "Think of an examination hall setting.",
+            explanation: "A standard LLM is taking a Closed-Book Exam: it must answer entirely from memory. If it forgets a formula, it might guess and write a confident falsehood. RAG transforms the test into an Open-Book Exam: when the question asks about a specific rule, the student flips open the textbook, reads the exact paragraph, and writes down the verified answer while citing page 42.",
+            keyHighlights: ["Closed book = Raw memorized LLM", "Open book = RAG with verified references", "Answers backed by exact page numbers"]
+          },
+          howItWorks: {
+            title: "How It Works (RAG Architecture Pipeline)",
+            subTitle: "From PDF Ingestion to Grounded Response",
+            workflowSteps: [
+              { step: "1. Document Chunking", desc: "College policy PDFs are split into 500-word logical chunks with metadata." },
+              { step: "2. Vector Embeddings", desc: "An embedding model converts each chunk into high-dimensional numerical vectors." },
+              { step: "3. Vector DB Indexing", desc: "Vectors are stored in a specialized database (ChromaDB, Pinecone, or FAISS)." },
+              { step: "4. Semantic Search", desc: "The user's query is converted to a vector; cosine similarity finds the top 3 most relevant chunks." },
+              { step: "5. Grounded LLM Response", desc: "Retrieved chunks are passed into the LLM prompt with strict instructions to cite sources." }
+            ]
+          },
+          whereUsed: {
+            title: "Where Is It Used?",
+            subTitle: "Industry Enterprise Implementations",
+            useCases: [
+              { area: "College Student Helpdesks", desc: "Answering questions on hostel curfews, exam fees, and attendance rules directly from official circulars." },
+              { area: "Corporate HR Portals", desc: "Allowing employees to search maternity leave policies, insurance coverage, and travel claims." },
+              { area: "Medical Guidelines", desc: "Assisting doctors in querying clinical research papers for drug interaction guidelines." },
+              { area: "Legal Compliance", desc: "Helping lawyers retrieve contract clauses and statutory precedents across thousands of case files." }
+            ]
+          },
+          whoUses: {
+            title: "Who Builds RAG Systems?",
+            subTitle: "Key Technical Stakeholders",
+            rolesList: [
+              { role: "RAG Solutions Engineers", desc: "Design document ingestion pipelines, chunking strategies, and vector search relevance." },
+              { role: "Enterprise AI Architects", desc: "Integrate proprietary knowledge repositories with cloud LLM endpoints." },
+              { role: "Knowledge Managers", desc: "Ensure company documentation remains accurate, up-to-date, and indexed." }
+            ]
+          },
+          realLife: {
+            title: "Real-Life Example: College Attendance Circular",
+            subTitle: "Answering Student Inquiries with Verified Facts",
+            story: "A first-year engineering student asks the campus portal: 'What is the minimum attendance required to appear for semester exams?'",
+            outcome: "1. The RAG system searches the indexed College Academic Regulations PDF.\n2. It retrieves Section 4.2: 'A student must secure a minimum of 75% attendance. Students between 65% and 74% are eligible only upon submitting an approved medical certificate.'\n3. The LLM reads that excerpt and writes: 'You need a minimum of 75% attendance to sit for semester exams. If you have between 65% and 74%, you may apply with a medical certificate [Academic Regulations, Page 14].'\n4. If the student asks about a rule not mentioned in the PDF, the assistant responds truthfully: 'That information is not in the handbook,' avoiding false statements.",
+            freshnessNote: "Fact Check Reality: When rules change, administrators simply upload the new PDF into the vector database; zero model retraining is needed."
+          },
+          demo: {
+            title: "Practical Demo & RAG vs. Fine-Tuning",
+            subTitle: "When to Retrieve vs. When to Retrain",
+            steps: [
+              "1. Ingest college policy document using PyPDF loader.",
+              "2. Split text into chunks using RecursiveCharacterTextSplitter.",
+              "3. Create vector embeddings using an open-source embedding model.",
+              "4. Query the vector index and feed top passages into LLM prompt.",
+              "5. Display answer alongside source document page numbers."
+            ],
+            ragVsFineTuneTable: true
+          },
+          prosConsCareers: {
+            title: "Advantages, Limitations & Careers",
+            subTitle: "Enterprise Reliability and High-Demand Roles",
+            pros: [
+              "Virtually eliminates hallucinations by confining the LLM to verified texts.",
+              "Information updates take seconds: just add a new PDF to the vector database.",
+              "Provides complete auditability with traceable source citations and page numbers."
+            ],
+            cons: [
+              "Garbage Retrieval = Garbage Response: If search fetches wrong chunks, the answer fails.",
+              "Chunking strategy requires careful tuning for complex tables, diagrams, and financial sheets.",
+              "Adds minor search latency compared to querying an ungrounded model directly."
+            ],
+            careers: ["RAG Solutions Architect", "Vector Database Engineer", "Enterprise AI Engineer", "Knowledge Graph Developer"],
+            skills: ["Vector DBs (Chroma, Pinecone, FAISS)", "Embedding Models", "LlamaIndex & LangChain", "Chunking Strategies", "Python"]
+          }
+        }
+      },
+      {
+        id: 8,
+        name: "Blackbox AI",
+        category: "Artificial Intelligence",
+        icon: "📦",
+        shortDesc: "Exploring both non-interpretable opaque AI systems and AI-powered developer coding assistants.",
+        branches: {
+          what: {
+            title: "Dual Meaning & Clarification",
+            subTitle: "Two Crucial Conceptions in Computer Science",
+            definition: "It is vital to distinguish the two common usages of 'Blackbox AI':\n\n1. Concept 1: Black-Box AI (System Opacity): Refers to deep machine learning systems whose internal mathematical decision pathways cannot be easily inspected or understood by human observers.\n\n2. Concept 2: BLACKBOX AI (Developer Product): Refers to specialized AI-powered developer coding assistants designed to accelerate code drafting, autocomplete, and code search.",
+            simpleExplanation: "In academic AI, 'black box' means we put inputs in and get outputs out, but cannot explain why the math chose that specific result. In developer tools, 'BLACKBOX AI' is a coding assistant that helps programmers write code faster.",
+            keyHighlights: ["Concept 1: Explainability & Interpretability Challenge", "Concept 2: Developer Coding Assistant Product", "Need for Human Code Review", "Responsible AI Governance"]
+          },
+          analogy: {
+            title: "Daily-Life Analogy",
+            subTitle: "The Mysterious Exam Grading Machine",
+            analogyText: "Imagine submitting your exam answer paper into a black metal box on a wall.",
+            explanation: "Three seconds later, a buzzer rings and the box stamps 'Score: 42/100'. When you ask: 'Where did I lose marks? Which answer was wrong?', the box provides zero explanation. That opacity is the black-box dilemma in AI. When loans or medical treatments are decided, humans need to know the 'Why'.",
+            keyHighlights: ["Inputs enter, outputs exit", "Internal weights are opaque", "High-stakes decisions demand transparency"]
+          },
+          howItWorks: {
+            title: "How It Works (General vs Coding Workflow)",
+            subTitle: "Safe Workflow When Using AI Coding Generation",
+            workflowSteps: [
+              { step: "1. Developer Request", desc: "Developer asks for a Python function to validate user email formats and phone numbers." },
+              { step: "2. AI Generates Draft", desc: "The coding assistant produces proposed syntax based on learned code patterns." },
+              { step: "3. Developer Code Review", desc: "The developer reads every line to identify hidden edge-case bugs and security flaws." },
+              { step: "4. Unit & Edge-Case Testing", desc: "Run test cases: What if input is null? What if an invalid character is passed?" },
+              { step: "5. Production Merge", desc: "Only audited, verified code is integrated into real production software." }
+            ]
+          },
+          whereUsed: {
+            title: "Where Is It Used?",
+            subTitle: "Real-World Scenarios and Explainability Needs",
+            useCases: [
+              { area: "Banking & Loan Underwriting", desc: "Assessing credit scores; explainability tools are required to justify credit rejections to regulators." },
+              { area: "Healthcare Diagnostics", desc: "Predicting cancer risks; doctors need visual heatmaps showing which pixels triggered the diagnosis." },
+              { area: "Software Engineering", desc: "Using coding assistants to speed up boilerplate code writing, regex generation, and debugging." },
+              { area: "Criminal Justice & Bail Systems", desc: "Assessing recidivism risk; opacity in these systems causes major legal and ethical challenges." }
+            ]
+          },
+          whoUses: {
+            title: "Who Confronts Blackbox AI?",
+            subTitle: "Technical and Governance Roles",
+            rolesList: [
+              { role: "Explainable AI (XAI) Researchers", desc: "Build mathematical tools (like SHAP and LIME) to explain deep neural decisions." },
+              { role: "Software Engineers", desc: "Use coding assistants while maintaining responsibility for software quality and security." },
+              { role: "Compliance & Legal Officers", desc: "Ensure AI applications adhere to safety and transparency standards (like the EU AI Act)." }
+            ]
+          },
+          realLife: {
+            title: "Real-Life Example: Bank Loan Rejection",
+            subTitle: "Why Unexplainable AI Violates Financial Regulations",
+            story: "A small shop owner applies for an SME business loan at a commercial bank. The bank's credit evaluation AI automatically returns: 'Rejected'.",
+            outcome: "• Under banking regulations, the bank cannot simply say: 'The algorithm said no.'\n• The applicant has a legal right to know why: Was it high credit card debt? Insufficient operating cash flow? Or errors in credit bureau reporting?\n• Because deep neural networks are black boxes, banks implement Explainable AI (XAI) layers that identify which specific financial metrics drove the negative decision.\n• The loan officer can then advise the applicant: 'Your debt-to-income ratio is currently 62%; reduce it below 40% to qualify.'",
+            freshnessNote: "Developer Rule: When using AI coding assistants, never copy-paste generated code directly into production without verifying logic and edge-case behavior."
+          },
+          demo: {
+            title: "Practical Demo: Inspecting AI Code",
+            subTitle: "Catching Edge-Case Bugs Missed by Coding Assistants",
+            steps: [
+              "1. Prompt coding assistant to generate a discount calculation function.",
+              "2. Inspect generated code for hidden mathematical assumptions.",
+              "3. Notice what happens if someone inputs a discount of 150% or negative prices.",
+              "4. Refactor the code with explicit bounds checks and unit tests."
+            ],
+            codeSnippet: `# AI generated this naive function:
+def calculate_discount(price, discount_percent):
+    return price - (price * (discount_percent / 100))
+
+# DEVELOPER MANUAL CODE REVIEW CHECKPOINT:
+# What happens if discount_percent is 150%? Price becomes negative!
+# What happens if price is negative? 
+
+# CORRECTED, AUDITED SECURE CODE:
+def calculate_discount_safe(price, discount_percent):
+    if price < 0:
+        raise ValueError("Price cannot be negative.")
+    if not (0 <= discount_percent <= 100):
+        raise ValueError("Discount must be between 0% and 100%.")
+    return round(price - (price * (discount_percent / 100)), 2)`
+          },
+          prosConsCareers: {
+            title: "Advantages, Limitations & Careers",
+            subTitle: "Speed vs. Transparency in AI",
+            pros: [
+              "AI coding tools boost developer programming speed by 40-50% on routine boilerplate.",
+              "Deep neural models can detect non-linear patterns that manual rules could never capture.",
+              "Helps students learn unfamiliar syntax and frameworks rapidly."
+            ],
+            cons: [
+              "Lack of transparency can conceal dangerous bias in medical, criminal, or banking models.",
+              "Blindly copy-pasting AI code can introduce critical security vulnerabilities into software.",
+              "Commercial coding products change features and subscription terms frequently."
+            ],
+            careers: ["Explainable AI (XAI) Engineer", "AI Ethics & Compliance Officer", "AI-Augmented Software Developer", "ML Safety Auditor"],
+            skills: ["SHAP & LIME Interpretability Tools", "Python Debugging", "Software Unit Testing", "Regulatory AI Compliance"]
+          }
+        }
+      },
+      {
+        id: 9,
+        name: "Ethical Hacking",
+        category: "Cybersecurity",
+        icon: "🛡️",
+        shortDesc: "Authorized security testing and vulnerability assessment to find and fix flaws before malicious attackers strike.",
+        branches: {
+          what: {
+            title: "Definition & Legal Mandate",
+            subTitle: "What is Ethical Hacking?",
+            definition: "Ethical Hacking (White-Hat Hacking) is the practice of systematically evaluating the security of computer systems, networks, or web applications with explicit, written legal authorization from the system owners. The primary objective is to identify security vulnerabilities, misconfigurations, and loopholes before malicious threat actors (Black-Hat hackers) can exploit them for theft, extortion, or disruption.",
+            simpleExplanation: "An ethical hacker acts like a certified bank security inspector, not a bank robber. They examine locks, alarms, and windows with the manager's permission, reporting every flaw so it can be fixed before a burglar strikes.",
+            keyHighlights: ["Written Legal Contract & Scope of Engagement", "Proactive Vulnerability Discovery", "Responsible Disclosure & Remediation", "Strictly Non-Destructive Testing"]
+          },
+          analogy: {
+            title: "Daily-Life Analogy",
+            subTitle: "Hiring a Professional Locksmith for a New House",
+            analogyText: "Imagine moving into a newly rented apartment.",
+            explanation: "You invite a professional locksmith to inspect all the doors and windows. In your presence, the locksmith tests if the front lock can be picked with a master key or if the balcony latch is loose. They hand you a list of recommended replacements. They do not steal your valuables; they help you protect your home before intruders arrive.",
+            keyHighlights: ["Homeowner invites the inspection", "Tests weaknesses before an intruder tests them", "Leaves the home significantly safer"]
+          },
+          howItWorks: {
+            title: "How It Works (Professional Pentest Workflow)",
+            subTitle: "The Systematic Phases of an Authorized Security Audit",
+            workflowSteps: [
+              { step: "1. Authorization & Scope", desc: "Sign legal NDA and strictly define target IP addresses, servers, and off-limits systems." },
+              { step: "2. Permitted Reconnaissance", desc: "Safely inspect public server headers, open ports, and tech stack details." },
+              { step: "3. Vulnerability Scanning", desc: "Scan for outdated software packages, unpatched bugs, and weak passwords." },
+              { step: "4. Controlled Exploitation", desc: "Safely demonstrate proof-of-concept flaw without damaging or corrupting real data." },
+              { step: "5. Remediation & Retest", desc: "Deliver a remediation report to developers and re-test once patches are applied." }
+            ]
+          },
+          whereUsed: {
+            title: "Where Is It Used?",
+            subTitle: "Protecting Critical Digital Infrastructure",
+            useCases: [
+              { area: "Banking & UPI Payment Systems", desc: "Testing online banking portals to prevent unauthorized money transfers and credential leaks." },
+              { area: "Healthcare Patient Portals", desc: "Securing confidential medical records from unauthorized access or ransomware attacks." },
+              { area: "E-Commerce Stores", desc: "Ensuring customer credit card details and home addresses cannot be sniffed on public Wi-Fi." },
+              { area: "College Examination Systems", desc: "Preventing students or outsiders from tampering with marks or leaking exam question papers." }
+            ]
+          },
+          whoUses: {
+            title: "Who Are Ethical Hackers?",
+            subTitle: "Professional Cybersecurity Roles",
+            rolesList: [
+              { role: "Penetration Testers", desc: "Simulate real-world cyberattacks on web applications and networks under legal contracts." },
+              { role: "SOC Analysts (Blue Team)", desc: "Monitor 24/7 security alerts to detect and neutralize unauthorized intrusion attempts." },
+              { role: "Application Security Engineers", desc: "Review developer code before deployment to ensure secure coding standards." }
+            ]
+          },
+          realLife: {
+            title: "Real-Life Example: College Portal Security Audit",
+            subTitle: "Uncovering an IDOR Loophole Before Bad Actors Exploit It",
+            story: "A university develops a new online portal to publish semester examination marks. Before taking it live, the Dean hires an authorized cybersecurity professional to test the system.",
+            outcome: "• During testing, the ethical hacker logs in as Student A (ID #101).\n• In the browser URL bar, they change 'student_id=101' to 'student_id=102' and discover that Student B's grades and home address appear on screen without authentication (an IDOR - Insecure Direct Object Reference vulnerability).\n• The tester does not download or share the data; they immediately submit a confidential vulnerability report to the university IT department.\n• The web developer adds server-side session checks so students can view only their own records.\n• Thousands of students' private personal records are protected before attackers could abuse the loophole.",
+            freshnessNote: "Mandatory Security Rule: Test only systems you own or have explicit, written authorization to assess. Testing unauthorized systems is a serious cybercrime under national cyber laws (e.g. IT Act Section 66)."
+          },
+          demo: {
+            title: "Practical Demo: Safe Hardening Checklist",
+            subTitle: "Essential Security Guardrails for Student Projects",
+            steps: [
+              "1. Always enforce HTTPS so network packets are encrypted against Wi-Fi eavesdropping.",
+              "2. Use parameterized queries or ORMs to prevent SQL Injection attacks on login forms.",
+              "3. Enforce Multi-Factor Authentication (MFA) on all administrative dashboards.",
+              "4. Hash and salt passwords using bcrypt or Argon2; NEVER store passwords in plain text.",
+              "5. Keep all third-party software dependencies and packages updated to their latest patches."
+            ],
+            securityChecklist: true
+          },
+          prosConsCareers: {
+            title: "Advantages, Limitations & Careers",
+            subTitle: "Organizational Defense and Global Career Demand",
+            pros: [
+              "Uncovers severe security vulnerabilities before malicious criminals exploit them for profit.",
+              "Protects customer privacy rights, institutional reputation, and legal compliance (GDPR/DPDP).",
+              "Helps software development teams build secure coding habits from day one."
+            ],
+            cons: [
+              "A security penetration test only reflects the state of a system at a single point in time.",
+              "Misconfigured automated vulnerability scanners can accidentally crash sensitive live production databases.",
+              "Demands continuous, relentless learning as new exploit techniques emerge every single week."
+            ],
+            careers: ["Ethical Hacker / Penetration Tester", "SOC Security Analyst", "Application Security Engineer", "Cybersecurity Consultant"],
+            skills: ["Computer Networking (TCP/IP)", "Linux Operating System", "Burp Suite & OWASP Top 10", "Python/Bash Scripting", "Certifications: CEH, Security+, OSCP"]
+          }
+        }
+      }
+    ];
+
+    /* 10 Multiple-Choice Questions for Interactive Quiz (100% English) */
+    const QUIZ_QUESTIONS = [
+      {
+        topic: "Power BI",
+        question: "What is the primary role of Power Query within Microsoft Power BI?",
+        options: [
+          "To purchase Microsoft Office 365 licenses",
+          "To ingest, clean, filter, and transform messy raw data",
+          "To stream live video game feeds into a report",
+          "To physically delete the computer's hard drive"
+        ],
+        answerIndex: 1,
+        explanation: "Power Query is the dedicated ETL (Extract, Transform, Load) engine inside Power BI used to clean, filter, and restructure messy tabular data before visualization."
+      },
+      {
+        topic: "Tableau",
+        question: "How does Tableau differ primarily from traditional tabular spreadsheets?",
+        options: [
+          "It uses VizQL to translate visual drag-and-drop actions into responsive queries and artistic charts",
+          "It only permits black-and-white text printing",
+          "It is completely incapable of connecting to SQL databases",
+          "It cannot display numbers or mathematical calculations"
+        ],
+        answerIndex: 0,
+        explanation: "Tableau's core VizQL engine translates visual drag-and-drop operations on dimensions and measures directly into database queries to generate expressive charts and maps."
+      },
+      {
+        topic: "Large Language Models (LLMs)",
+        question: "When an LLM produces a confidently stated but completely false fact, what is this phenomenon called?",
+        options: [
+          "Supervised Overclocking",
+          "Tokenization Overflow",
+          "AI Hallucination",
+          "Database Cache Inversion"
+        ],
+        answerIndex: 2,
+        explanation: "An AI Hallucination occurs when an LLM predicts statistically plausible words that do not align with real-world facts, stating false claims with grammatical confidence."
+      },
+      {
+        topic: "API Keys",
+        question: "Where should an API Key strictly NEVER be stored or committed?",
+        options: [
+          "Inside a secure backend server environment variable (.env)",
+          "Inside an encrypted cloud secrets vault",
+          "Directly inside client-facing public frontend JavaScript or public GitHub repositories",
+          "Inside a protected Linux server configuration directory"
+        ],
+        answerIndex: 2,
+        explanation: "Never expose API Keys in client-side code, public GitHub repos, or screenshots. Automated scrapers can steal exposed keys within minutes to abuse your quota and billing."
+      },
+      {
+        topic: "Deployment",
+        question: "What is the primary transformation that occurs during software deployment?",
+        options: [
+          "Moving code from a private local development laptop (localhost) to a publicly accessible 24/7 internet cloud server",
+          "Translating Python code into poetic literature",
+          "Purchasing a brand-new laptop for the client",
+          "Uninstalling all browser extensions from the developer's computer"
+        ],
+        answerIndex: 0,
+        explanation: "Deployment transitions code running privately on localhost into an active cloud hosting environment accessible worldwide through a verified public URL."
+      },
+      {
+        topic: "Agentic AI",
+        question: "What fundamentally distinguishes an Agentic AI system from a basic conversational chatbot?",
+        options: [
+          "It only uses emojis to respond to queries",
+          "It can autonomously plan multi-step workflows, call approved tools, observe results, and self-correct",
+          "It requires zero electricity or computing hardware",
+          "It is legally forbidden from connecting to databases"
+        ],
+        answerIndex: 1,
+        explanation: "Agentic AI systems can autonomously break an overarching goal into sub-steps, invoke software tools (browsers, databases, APIs), evaluate feedback, and iterate toward completion."
+      },
+      {
+        topic: "Prompt Engineering",
+        question: "Which of the following techniques yields the highest quality, most reliable output from a Generative AI model?",
+        options: [
+          "Entering a single vague keyword like 'essay'",
+          "Providing persona context, explicit task objectives, clear negative constraints, and desired output schemas",
+          "Typing in all capital letters with dozens of exclamation marks",
+          "Asking the AI model to repeat the word 'now' 1,000 times"
+        ],
+        answerIndex: 1,
+        explanation: "Providing clear persona framing, explicit objectives, relevant context, negative constraints, and structured output formatting guides the model toward predictable and accurate results."
+      },
+      {
+        topic: "RAG",
+        question: "Why do enterprise applications implement RAG (Retrieval-Augmented Generation)?",
+        options: [
+          "To permanently retrain and alter the neural network weights every single night",
+          "To retrieve factual passages from verified private documents so the LLM grounds its answers in verified truth",
+          "To replace all human employees with robotic assembly arms",
+          "To permanently encrypt the user's hard drive"
+        ],
+        answerIndex: 1,
+        explanation: "RAG retrieves relevant passages from private vector databases (such as policy handbooks) and passes them into the prompt, grounding the LLM's response in verified facts."
+      },
+      {
+        topic: "Blackbox AI",
+        question: "When using an AI coding assistant, what is the mandatory responsibility of the software developer?",
+        options: [
+          "Blindly committing the generated code into production without reading it",
+          "Carefully reviewing every line, testing edge cases, and verifying security before deployment",
+          "Deleting all previously written unit test files",
+          "Disabling firewall security and antivirus protections"
+        ],
+        answerIndex: 1,
+        explanation: "AI coding assistants produce proposed drafts based on statistical patterns. Developers must review every line, verify edge cases, and test for security flaws before production merge."
+      },
+      {
+        topic: "Ethical Hacking",
+        question: "What is the single most critical legal requirement before performing an ethical hacking security assessment?",
+        options: [
+          "Downloading anonymous dark web exploitation tools",
+          "Explicit, written legal authorization and defined scope from the system owner",
+          "Testing without telling the owner so that it is a total surprise",
+          "Deleting the target organization's database backups first"
+        ],
+        answerIndex: 1,
+        explanation: "Explicit written authorization and a mutually signed scope of engagement are what legally distinguish an ethical hacker from a malicious cybercriminal."
+      }
+    ];
+
+    /* Application State */
+    let currentTopicIndex = 0;
+    let selectedBranchKey = 'what';
+    let quizUserAnswers = {};
+  </script>
+
+  <script>
+    // Navigation router
+    function navigateTo(viewId) {
+      document.getElementById('view-dashboard').classList.add('hidden');
+      document.getElementById('view-topic').classList.add('hidden');
+      document.getElementById('view-ecosystem').classList.add('hidden');
+      document.getElementById('view-quiz').classList.add('hidden');
+      document.getElementById('view-capstone').classList.add('hidden');
+
+      const target = document.getElementById('view-' + viewId);
+      if (target) {
+        target.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Update breadcrumb
+      const crumb = document.getElementById('current-crumb-topic');
+      if (viewId === 'dashboard') crumb.textContent = 'Dashboard';
+      else if (viewId === 'topic') crumb.textContent = TOPICS_DATA[currentTopicIndex].name;
+      else if (viewId === 'ecosystem') crumb.textContent = 'Ecosystem Map';
+      else if (viewId === 'quiz') crumb.textContent = 'Interactive Quiz';
+      else if (viewId === 'capstone') crumb.textContent = 'Capstone Project';
+    }
+
+    // Populate Dashboard Bento Cards (100% English)
+    function renderDashboardCards() {
+      const grid = document.getElementById('topic-grid');
+      grid.innerHTML = '';
+
+      TOPICS_DATA.forEach((topic, idx) => {
+        const card = document.createElement('div');
+        card.className = "glow-card bg-surfaceCard rounded-2xl border border-surfaceBorder p-5 flex flex-col justify-between cursor-pointer group";
+        card.onclick = () => openTopic(idx);
+
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-3xl p-2.5 rounded-xl bg-charcoal border border-slate-800 group-hover:scale-110 transition duration-300">${topic.icon}</span>
+              <span class="text-[11px] font-mono font-bold text-neonYellow bg-neonYellow/10 px-2 py-0.5 rounded-full border border-neonYellow/20">Topic 0${idx+1}</span>
+            </div>
+            <h4 class="text-lg font-bold font-display text-white group-hover:text-neonYellow transition">${topic.name}</h4>
+            <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400 block mt-1">${topic.category}</span>
+            <p class="text-xs text-slate-300 mt-2 line-clamp-3 leading-relaxed">${topic.shortDesc}</p>
+          </div>
+          <div class="mt-4 pt-3 flex items-center justify-between border-t border-surfaceBorder">
+            <span class="text-[11px] font-medium text-slate-400 group-hover:text-white transition">8 Interactive Branches</span>
+            <span class="text-xs font-bold text-neonYellow flex items-center gap-1 group-hover:translate-x-1 transition">
+              Explore Tree &rarr;
+            </span>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Open a specific topic and render its tree
+    function openTopic(index) {
+      currentTopicIndex = index;
+      selectedBranchKey = 'what';
+      renderTopicTree();
+      navigateTo('topic');
+    }
+
+    function prevTopic() {
+      if (currentTopicIndex > 0) {
+        openTopic(currentTopicIndex - 1);
+      } else {
+        openTopic(TOPICS_DATA.length - 1);
+      }
+    }
+
+    function nextTopic() {
+      if (currentTopicIndex < TOPICS_DATA.length - 1) {
+        openTopic(currentTopicIndex + 1);
+      } else {
+        openTopic(0);
+      }
+    }
+
+    function resetTreeSelection() {
+      selectedBranchKey = 'what';
+      renderTopicTree();
+    }
+
+    // Render tree nodes and details
+    function renderTopicTree() {
+      const topic = TOPICS_DATA[currentTopicIndex];
+
+      // Update Header info
+      document.getElementById('tree-title').innerHTML = `
+        <span>${topic.icon}</span>
+        <span>${topic.name}</span>
+        <span class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-neonYellow font-mono border border-slate-700 font-normal">Module 0${topic.id + 1} of 10</span>
+      `;
+      document.getElementById('tree-subtitle').textContent = topic.shortDesc;
+      document.getElementById('topic-indicator-badge').textContent = `Topic ${topic.id + 1} of 10`;
+
+      // Update Center Node
+      document.getElementById('tree-center-name').textContent = topic.name;
+      document.getElementById('tree-center-sub').textContent = topic.shortDesc;
+
+      // 8 Branch metadata (English Only)
+      const branchMeta = [
+        { key: 'what', label: '1. What is it?', sub: 'Definition', icon: '💡' },
+        { key: 'analogy', label: '2. Daily Analogy', sub: 'Familiar Story', icon: '☕' },
+        { key: 'howItWorks', label: '3. How It Works', sub: 'Step Workflow', icon: '⚙️' },
+        { key: 'whereUsed', label: '4. Where Used?', sub: 'Use Cases', icon: '🌐' },
+        { key: 'whoUses', label: '5. Who Uses It?', sub: 'Key Roles', icon: '👥' },
+        { key: 'realLife', label: '6. Real-Life Case', sub: 'Industry Story', icon: '🛒' },
+        { key: 'demo', label: '7. Practical Demo', sub: 'Mini Project', icon: '💻' },
+        { key: 'prosConsCareers', label: '8. Pros, Cons & Careers', sub: 'Skills & Jobs', icon: '💼' }
+      ];
+
+      // Render 8 Branch Buttons
+      const branchContainer = document.getElementById('tree-branch-container');
+      branchContainer.innerHTML = '';
+
+      branchMeta.forEach((meta, idx) => {
+        const isSelected = selectedBranchKey === meta.key;
+        const btn = document.createElement('button');
+        btn.onclick = () => selectBranch(meta.key);
+        btn.className = `p-3 rounded-xl border text-left transition-all duration-200 flex flex-col justify-between ${
+          isSelected 
+            ? 'bg-neonYellow text-charcoal border-neonYellow font-bold shadow-lg shadow-neonYellow/30 scale-105 z-30'
+            : 'bg-surfaceCard hover:bg-surfaceBorder border-surfaceBorder text-slate-200 hover:border-slate-500'
+        }`;
+
+        btn.innerHTML = `
+          <div class="flex items-center justify-between w-full mb-1">
+            <span class="text-sm">${meta.icon}</span>
+            <span class="text-[9px] font-mono px-1 rounded ${isSelected ? 'bg-charcoal text-neonYellow' : 'bg-charcoal/60 text-slate-400'}">${idx+1}</span>
+          </div>
+          <div>
+            <div class="text-xs font-display font-semibold line-clamp-1 ${isSelected ? 'text-charcoal' : 'text-white'}">${meta.label}</div>
+            <div class="text-[10px] line-clamp-1 ${isSelected ? 'text-charcoal/80' : 'text-slate-400'}">${meta.sub}</div>
+          </div>
+        `;
+        branchContainer.appendChild(btn);
+
+        // Highlight SVG path if desktop
+        const line = document.getElementById(`line-${idx}`);
+        if (line) {
+          if (isSelected) {
+            line.setAttribute('stroke', '#F2C811');
+            line.setAttribute('stroke-width', '3.5');
+          } else {
+            line.setAttribute('stroke', '#4B5563');
+            line.setAttribute('stroke-width', '1.5');
+          }
+        }
+      });
+
+      // Render Detailed Explanation Panel
+      renderExplanationPanel(topic, selectedBranchKey);
+    }
+
+    function selectBranch(branchKey) {
+      selectedBranchKey = branchKey;
+      renderTopicTree();
+      // Smooth scroll on mobile screens
+      if (window.innerWidth < 768) {
+        document.getElementById('explanation-panel').scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // Render detailed explanation based on clicked branch
+    function renderExplanationPanel(topic, branchKey) {
+      const panel = document.getElementById('explanation-panel');
+      const bData = topic.branches[branchKey] || topic.branches['what'];
+
+      let contentHTML = `
+        <div class="space-y-6">
+          <div class="border-b border-surfaceBorder pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <div>
+              <span class="text-neonYellow text-xs font-mono uppercase tracking-wider block">Interactive Branch Walkthrough</span>
+              <h3 class="text-2xl font-bold font-display text-white flex items-center gap-2">
+                ${bData.title}
+              </h3>
+              <p class="text-sm text-slate-300 mt-1 font-medium">${bData.subTitle || ''}</p>
+            </div>
+            <div class="px-3 py-1 rounded-full bg-charcoal border border-surfaceBorder text-xs text-slate-400 font-mono">
+              Topic: <span class="text-white font-bold">${topic.name}</span>
+            </div>
+          </div>
+      `;
+
+      // Branch 1: What is it?
+      if (branchKey === 'what') {
+        contentHTML += `
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div class="bg-surface rounded-xl p-5 border border-surfaceBorder space-y-2">
+              <span class="text-[11px] font-mono uppercase tracking-wider text-neonYellow block font-semibold">Formal Technical Definition</span>
+              <p class="text-sm text-slate-200 leading-relaxed">${bData.definition}</p>
+            </div>
+            <div class="bg-surface rounded-xl p-5 border border-surfaceBorder space-y-2">
+              <span class="text-[11px] font-mono uppercase tracking-wider text-slate-400 block font-semibold">Simple Student Explanation</span>
+              <p class="text-sm text-slate-300 leading-relaxed">${bData.simpleExplanation}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      // Branch 2: Daily Analogy
+      if (branchKey === 'analogy') {
+        contentHTML += `
+          <div class="space-y-4">
+            <div class="bg-surface rounded-xl p-5 border border-amber-900/40 space-y-2">
+              <span class="text-xs font-mono uppercase tracking-wider text-amber-400 font-semibold block">Everyday Life Comparison</span>
+              <p class="text-sm text-slate-200 leading-relaxed italic">"${bData.analogyText}"</p>
+              <p class="text-sm text-slate-300 leading-relaxed pt-2 border-t border-surfaceBorder">${bData.explanation}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      // Branch 3: How It Works (Workflow Steps)
+      if (branchKey === 'howItWorks' && bData.workflowSteps) {
+        contentHTML += `
+          <div class="bg-surface rounded-xl p-5 border border-surfaceBorder space-y-3">
+            <h4 class="text-xs font-mono font-bold text-neonYellow uppercase tracking-wider">
+              Step-by-Step Execution Pipeline:
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 pt-2">
+              ${bData.workflowSteps.map((ws, i) => `
+                <div class="bg-surfaceCard p-4 rounded-xl border border-slate-700/80 flex flex-col justify-between hover:border-neonYellow transition">
+                  <div>
+                    <span class="text-[10px] font-mono text-neonYellow font-bold block mb-1">PHASE 0${i+1}</span>
+                    <div class="font-bold text-xs text-white">${ws.step}</div>
+                  </div>
+                  <div class="text-[11px] text-slate-300 mt-2 leading-relaxed">${ws.desc}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // Branch 4: Where Used?
+      if (branchKey === 'whereUsed' && bData.useCases) {
+        contentHTML += `
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            ${bData.useCases.map(uc => `
+              <div class="bg-surface p-4 rounded-xl border border-surfaceBorder space-y-1">
+                <span class="text-xs font-bold text-neonYellow font-display">${uc.area}</span>
+                <p class="text-xs text-slate-300 leading-relaxed">${uc.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      // Branch 5: Who Uses It?
+      if (branchKey === 'whoUses' && bData.rolesList) {
+        contentHTML += `
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+            ${bData.rolesList.map(r => `
+              <div class="bg-surface p-4 rounded-xl border border-surfaceBorder space-y-1">
+                <span class="text-xs font-bold text-white font-mono block">${r.role}</span>
+                <p class="text-xs text-slate-300 leading-relaxed">${r.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      // Branch 6: Real-Life Example
+      if (branchKey === 'realLife') {
+        contentHTML += `
+          <div class="space-y-4">
+            <div class="bg-surface rounded-xl p-5 border border-surfaceBorder space-y-3">
+              <span class="text-xs font-mono uppercase tracking-wider text-neonYellow font-semibold block">Practical Scenario Walkthrough</span>
+              <p class="text-sm text-slate-200 leading-relaxed">${bData.story}</p>
+              <div class="p-3.5 rounded-lg bg-charcoal border border-slate-800 text-xs text-slate-300 whitespace-pre-line leading-relaxed font-mono">
+                ${bData.outcome}
+              </div>
+              ${bData.freshnessNote ? `
+                <div class="text-xs text-amber-300/90 bg-amber-950/30 border border-amber-800/60 p-3 rounded-lg font-medium">
+                  💡 ${bData.freshnessNote}
+                </div>` : ''}
+            </div>
+          </div>
+        `;
+      }
+
+      // Before vs After Prompts Comparison (for Prompt Engineering)
+      if (bData.comparisonPrompts) {
+        contentHTML += `
+          <div class="space-y-3 text-xs">
+            <div class="p-3.5 rounded-xl bg-red-950/40 border border-red-800 text-red-200 space-y-1">
+              <span class="font-bold text-red-400 uppercase tracking-wide font-mono block">❌ Vague, Poor Prompt:</span>
+              <code class="text-white block bg-charcoal/60 p-2 rounded">"Tell me about artificial intelligence."</code>
+              <p class="text-slate-300 text-[11px] mt-1">Result: The AI returns 15 paragraphs of generic textbook history. The student finds it overwhelming, generic, and unhelpful.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-green-950/40 border border-green-800 text-green-200 space-y-1">
+              <span class="font-bold text-green-400 uppercase tracking-wide font-mono block">✅ Well-Engineered Prompt:</span>
+              <code class="text-white block bg-charcoal/60 p-2 rounded">"You are an encouraging college professor. Explain what Artificial Intelligence is to a 1st-year computer science student using 3 familiar everyday examples (like Google Maps or Spotify). Avoid deep mathematical jargon and conclude with a 2-sentence summary."</code>
+              <p class="text-slate-300 text-[11px] mt-1">Result: A concise, highly engaging, perfectly tailored response that the student grasps immediately.</p>
+            </div>
+          </div>
+        `;
+      }
+
+      // Branch 7: Practical Demo & Tables
+      if (branchKey === 'demo') {
+        contentHTML += `<div class="space-y-4">`;
+        if (bData.steps) {
+          contentHTML += `
+            <div class="bg-surface rounded-xl p-5 border border-surfaceBorder space-y-2">
+              <span class="text-xs font-mono uppercase tracking-wider text-neonYellow font-semibold block">Hands-on Implementation Steps:</span>
+              <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside">
+                ${bData.steps.map(s => `<li>${s}</li>`).join('')}
+              </ul>
+            </div>
+          `;
         }
 
-        // Harp / chime chord when opening
-        function playChime() {
-            if (!isSoundEnabled) return;
-            try {
-                initAudio();
-                const now = audioCtx.currentTime;
-                // E-major pentatonic harp notes: E5, G#5, B5, E6
-                const freqs = [659.25, 830.61, 987.77, 1318.51];
-                freqs.forEach((f, i) => {
-                    const osc = audioCtx.createOscillator();
-                    const gain = audioCtx.createGain();
-
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(f, now + i * 0.08);
-
-                    gain.gain.setValueAtTime(0, now + i * 0.08);
-                    gain.gain.linearRampToValueAtTime(0.18, now + i * 0.08 + 0.02);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.9);
-
-                    osc.connect(gain);
-                    gain.connect(audioCtx.destination);
-
-                    osc.start(now + i * 0.08);
-                    osc.stop(now + i * 0.08 + 0.95);
-                });
-            } catch (err) {}
+        if (bData.codeSnippet) {
+          contentHTML += `
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs text-slate-400 font-mono">
+                <span class="text-neonYellow">Code / Architecture Demonstration</span>
+                <span>Language Syntax Reference</span>
+              </div>
+              <pre class="bg-charcoal text-slate-200 p-4 rounded-xl text-xs font-mono overflow-x-auto border border-surfaceBorder leading-relaxed"><code>${escapeHTML(bData.codeSnippet)}</code></pre>
+            </div>
+          `;
         }
 
-        // Soft swoosh on folding back
-        function playFoldSound() {
-            if (!isSoundEnabled) return;
-            try {
-                initAudio();
-                const now = audioCtx.currentTime;
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(420, now);
-                osc.frequency.exponentialRampToValueAtTime(150, now + 0.3);
-
-                gain.gain.setValueAtTime(0.1, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
-
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-
-                osc.start(now);
-                osc.stop(now + 0.35);
-            } catch (err) {}
+        if (bData.comparisonTable) {
+          contentHTML += `
+            <div class="overflow-x-auto my-3 text-xs">
+              <table class="w-full text-left border border-surfaceBorder rounded-lg">
+                <thead class="bg-surfaceBorder text-neonYellow font-mono">
+                  <tr><th class="p-3">Comparison Metric</th><th class="p-3">Microsoft Power BI</th><th class="p-3">Salesforce Tableau</th></tr>
+                </thead>
+                <tbody class="divide-y divide-surfaceBorder text-slate-300">
+                  <tr><td class="p-3 font-semibold text-white">Ecosystem Fit</td><td class="p-3">Microsoft 365, Teams, Azure, Office Suite</td><td class="p-3">Salesforce, Multi-cloud & Enterprise Data Warehouses</td></tr>
+                  <tr><td class="p-3 font-semibold text-white">Visual Flexibility</td><td class="p-3">Standard corporate reporting and tabular dashboards</td><td class="p-3">High artistic visualization freedom and custom charts</td></tr>
+                  <tr><td class="p-3 font-semibold text-white">Calculation Language</td><td class="p-3">DAX & Power Query M-Code</td><td class="p-3">Calculated Fields & Level of Detail (LOD) Expressions</td></tr>
+                  <tr><td class="p-3 font-semibold text-white">Pricing Model</td><td class="p-3">Cost-effective for small to mid-sized businesses</td><td class="p-3">Higher tier enterprise licensing pricing</td></tr>
+                </tbody>
+              </table>
+            </div>
+          `;
         }
 
-        function toggleSound() {
-            isSoundEnabled = !isSoundEnabled;
-            const soundIcon = document.getElementById('soundIcon');
-            const soundLabel = document.getElementById('soundLabel');
+        if (bData.ragVsFineTuneTable) {
+          contentHTML += `
+            <div class="overflow-x-auto my-3 text-xs">
+              <table class="w-full text-left border border-surfaceBorder rounded-lg">
+                <thead class="bg-surfaceBorder text-neonYellow font-mono">
+                  <tr><th class="p-3">Feature</th><th class="p-3">RAG (Retrieval-Augmented Generation)</th><th class="p-3">Model Fine-Tuning</th></tr>
+                </thead>
+                <tbody class="divide-y divide-surfaceBorder text-slate-300">
+                  <tr><td class="p-3 font-semibold text-white">Information Access</td><td class="p-3">Retrieves external documents dynamically at query time</td><td class="p-3">Bakes information permanently into internal model weights</td></tr>
+                  <tr><td class="p-3 font-semibold text-white">Update Speed</td><td class="p-3">Instant: Upload new PDF to vector database in seconds</td><td class="p-3">Slow: Requires collecting training datasets and GPU compute</td></tr>
+                  <tr><td class="p-3 font-semibold text-white">Source Traceability</td><td class="p-3">Cites exact document page numbers and paragraphs</td><td class="p-3">Black-box: Cannot prove which training file generated the text</td></tr>
+                  <tr><td class="p-3 font-semibold text-white">Best Use Case</td><td class="p-3">Dynamic company policies, manuals, customer FAQs</td><td class="p-3">Teaching language tone, unique domain styles, or code formats</td></tr>
+                </tbody>
+              </table>
+            </div>
+          `;
+        }
 
-            if (isSoundEnabled) {
-                soundIcon.className = "fa-solid fa-volume-high text-amber-400";
-                soundLabel.textContent = "Sound ON";
-                showToast("Sound effects enabled 🔔");
-                initAudio();
+        if (bData.securityChecklist) {
+          contentHTML += `
+            <div class="space-y-2 text-xs">
+              <div class="flex items-center gap-2 p-2.5 rounded-lg bg-surface border border-slate-800">
+                <span class="text-neonYellow font-bold">✓ HTTPS / SSL Everywhere:</span>
+                <span class="text-slate-300">Encrypts all student credentials and traffic against public Wi-Fi sniffing.</span>
+              </div>
+              <div class="flex items-center gap-2 p-2.5 rounded-lg bg-surface border border-slate-800">
+                <span class="text-neonYellow font-bold">✓ Parameterized Queries:</span>
+                <span class="text-slate-300">Prevents SQL Injection attacks on login forms and search bars.</span>
+              </div>
+              <div class="flex items-center gap-2 p-2.5 rounded-lg bg-surface border border-slate-800">
+                <span class="text-neonYellow font-bold">✓ Multi-Factor Authentication:</span>
+                <span class="text-slate-300">Requires authenticator apps or OTPs before accessing administrative grading panels.</span>
+              </div>
+              <div class="flex items-center gap-2 p-2.5 rounded-lg bg-surface border border-slate-800">
+                <span class="text-neonYellow font-bold">✓ Password Hashing:</span>
+                <span class="text-slate-300">Use bcrypt or Argon2; never store plaintext passwords in databases.</span>
+              </div>
+            </div>
+          `;
+        }
+
+        contentHTML += `</div>`;
+      }
+
+      // Branch 8: Pros, Cons, Careers & Skills
+      if (branchKey === 'prosConsCareers') {
+        contentHTML += `
+          <div class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="bg-surface p-4 rounded-xl border border-green-900/50 space-y-2">
+                <h5 class="text-green-400 font-bold text-xs uppercase font-mono flex items-center gap-1.5">
+                  <span>✓ Major Advantages</span>
+                </h5>
+                <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside">
+                  ${bData.pros.map(p => `<li>${p}</li>`).join('')}
+                </ul>
+              </div>
+              <div class="bg-surface p-4 rounded-xl border border-red-900/50 space-y-2">
+                <h5 class="text-red-400 font-bold text-xs uppercase font-mono flex items-center gap-1.5">
+                  <span>⚠️ Limitations & Caveats</span>
+                </h5>
+                <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside">
+                  ${bData.cons.map(c => `<li>${c}</li>`).join('')}
+                </ul>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+              <div class="bg-surface p-4 rounded-xl border border-surfaceBorder space-y-2">
+                <h5 class="text-neonYellow font-bold text-xs uppercase font-mono">Industry Career Roles</h5>
+                <div class="flex flex-wrap gap-2">
+                  ${bData.careers.map(car => `<span class="px-2.5 py-1 rounded-md bg-surfaceCard text-slate-200 text-xs border border-surfaceBorder font-medium">${car}</span>`).join('')}
+                </div>
+              </div>
+              <div class="bg-surface p-4 rounded-xl border border-surfaceBorder space-y-2">
+                <h5 class="text-neonYellow font-bold text-xs uppercase font-mono">Target Skills to Master</h5>
+                <div class="flex flex-wrap gap-2">
+                  ${bData.skills.map(s => `<span class="px-2.5 py-1 rounded-md bg-neonYellow/10 text-neonYellow text-xs border border-neonYellow/30 font-medium">${s}</span>`).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Highlights footer badge list
+      if (bData.keyHighlights) {
+        contentHTML += `
+          <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-surfaceBorder">
+            <span class="text-xs text-slate-400 font-mono">Module Highlights:</span>
+            ${bData.keyHighlights.map(kh => `<span class="px-2.5 py-0.5 rounded-full bg-charcoal text-slate-300 text-[11px] border border-surfaceBorder font-medium">${kh}</span>`).join('')}
+          </div>
+        `;
+      }
+
+      contentHTML += `</div>`;
+      panel.innerHTML = contentHTML;
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+  </script>
+
+  <script>
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = '';
+
+      QUIZ_QUESTIONS.forEach((q, idx) => {
+        const qCard = document.createElement('div');
+        qCard.className = "bg-surfaceCard p-5 sm:p-6 rounded-xl border border-surfaceBorder space-y-4";
+        qCard.id = `quiz-card-${idx}`;
+
+        const isAnswered = quizUserAnswers.hasOwnProperty(idx);
+        const selectedOption = quizUserAnswers[idx];
+
+        let optionsHTML = `<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">`;
+        q.options.forEach((opt, optIdx) => {
+          let btnStyle = "bg-surface hover:bg-surfaceBorder text-slate-200 border-surfaceBorder";
+          let statusBadge = "";
+
+          if (isAnswered) {
+            if (optIdx === q.answerIndex) {
+              btnStyle = "bg-green-950/70 border-green-500 text-green-200 font-bold";
+              statusBadge = "✓ Correct";
+            } else if (selectedOption === optIdx) {
+              btnStyle = "bg-red-950/70 border-red-500 text-red-200";
+              statusBadge = "✕ Selected";
             } else {
-                soundIcon.className = "fa-solid fa-volume-xmark text-slate-500";
-                soundLabel.textContent = "Muted";
-                showToast("Sound muted 🔇");
+              btnStyle = "bg-surface opacity-50 border-surfaceBorder text-slate-400";
             }
-        }
+          }
 
-        /* 2. Opening & Closing Animation Flow */
-        let isNoteOpen = false;
-        const envelopeStage = document.getElementById('envelopeStage');
-        const envelopePerspective = document.getElementById('envelopePerspective');
-        const letterModal = document.getElementById('letterModal');
-        const letterBackdrop = document.getElementById('letterBackdrop');
-        const openPrompt = document.getElementById('openPrompt');
-
-        function openNote() {
-            if (isNoteOpen) return;
-            isNoteOpen = true;
-
-            initAudio();
-            playChime();
-
-            // 1. Unfold Envelope Flap in 3D
-            envelopeStage.classList.add('is-open');
-            envelopePerspective.classList.add('opened');
-
-            // 2. Hide intro title
-            openPrompt.style.opacity = '0';
-            openPrompt.style.pointerEvents = 'none';
-
-            // 3. Reveal backdrop and pop out the crystal-clear letter modal
-            letterBackdrop.classList.add('active');
-            
-            setTimeout(() => {
-                letterModal.classList.add('revealed');
-                fireCelebrationBurst();
-            }, 300);
-        }
-
-        function closeNote() {
-            if (!isNoteOpen) return;
-            isNoteOpen = false;
-
-            playFoldSound();
-
-            // Hide the letter card first
-            letterModal.classList.remove('revealed');
-            letterBackdrop.classList.remove('active');
-
-            // After letter leaves, fold the envelope back
-            setTimeout(() => {
-                envelopeStage.classList.remove('is-open');
-                envelopePerspective.classList.remove('opened');
-                openPrompt.style.opacity = '1';
-                openPrompt.style.pointerEvents = 'auto';
-            }, 400);
-
-            showToast("Note folded back safely into envelope 💌");
-        }
-
-        /* 3. Confetti Celebration Burst */
-        function fireCelebrationBurst() {
-            try {
-                if (typeof confetti === 'function') {
-                    // Golden and pink confetti bursts
-                    confetti({
-                        particleCount: 50,
-                        angle: 60,
-                        spread: 55,
-                        origin: { x: 0.15, y: 0.65 },
-                        colors: ['#f59e0b', '#ec4899', '#f43f5e', '#fbbf24', '#8b5cf6']
-                    });
-                    confetti({
-                        particleCount: 50,
-                        angle: 120,
-                        spread: 55,
-                        origin: { x: 0.85, y: 0.65 },
-                        colors: ['#f59e0b', '#ec4899', '#f43f5e', '#fbbf24', '#8b5cf6']
-                    });
-                    confetti({
-                        particleCount: 40,
-                        spread: 90,
-                        origin: { y: 0.5 },
-                        colors: ['#fbbf24', '#ffffff', '#ec4899']
-                    });
-                }
-            } catch (err) {}
-        }
-
-        /* 4. Copy Note Content */
-        function copyNoteMessage() {
-            const textToCopy = `✨ Dear Wonderful Soul,\n\nJust in case nobody told you today:\n\n"You are capable of extraordinary things. Every small step you take is leading you toward greatness. Breathe deeply, believe in your magic, and remember that the world is a much brighter and warmer place with you in it!"\n\nKeep shining brightly! 🌟\n— Wishing you joy, peace & endless smiles.`;
-
-            const btnText = document.getElementById('copyBtnText');
-
-            const handleSuccess = () => {
-                btnText.textContent = "Copied! ✨";
-                showToast("Positive message copied to clipboard! 📋");
-                setTimeout(() => {
-                    btnText.textContent = "Copy Note 📋";
-                }, 2400);
-            };
-
-            const tempInput = document.createElement("textarea");
-            tempInput.value = textToCopy;
-            tempInput.style.position = "fixed";
-            tempInput.style.opacity = "0";
-            document.body.appendChild(tempInput);
-            tempInput.focus();
-            tempInput.select();
-
-            try {
-                document.execCommand('copy');
-                handleSuccess();
-            } catch (err) {
-                showToast("Could not copy text.");
-            }
-            document.body.removeChild(tempInput);
-        }
-
-        /* 5. Toast Feedback Display */
-        let toastTimeout;
-        function showToast(msg) {
-            const toast = document.getElementById('toastNotification');
-            const messageSpan = document.getElementById('toastMessage');
-            messageSpan.textContent = msg;
-
-            toast.classList.remove('translate-y-24', 'opacity-0');
-
-            clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toast.classList.add('translate-y-24', 'opacity-0');
-            }, 2600);
-        }
-
-        /* 6. Canvas Background Starfield */
-        const canvas = document.getElementById('particleCanvas');
-        const ctx = canvas.getContext('2d');
-        let stars = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        class Star {
-            constructor() {
-                this.reset();
-            }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.6;
-                this.vx = (Math.random() - 0.5) * 0.3;
-                this.vy = (Math.random() - 0.5) * 0.3;
-                this.alpha = Math.random() * 0.7 + 0.2;
-                this.pulseSpeed = Math.random() * 0.02 + 0.008;
-                this.color = ['#f472b6', '#fbbf24', '#a855f7', '#38bdf8', '#ffffff'][Math.floor(Math.random() * 5)];
-            }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                this.alpha += Math.sin(Date.now() * this.pulseSpeed) * 0.01;
-
-                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-                    this.reset();
-                }
-            }
-            draw() {
-                ctx.save();
-                ctx.globalAlpha = Math.max(0.1, Math.min(1, this.alpha));
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-            }
-        }
-
-        function initStars() {
-            resizeCanvas();
-            stars = [];
-            const count = Math.min(80, Math.floor(window.innerWidth / 18));
-            for (let i = 0; i < count; i++) {
-                stars.push(new Star());
-            }
-        }
-
-        function animateStars() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            stars.forEach(s => {
-                s.update();
-                s.draw();
-            });
-            requestAnimationFrame(animateStars);
-        }
-
-        window.addEventListener('resize', resizeCanvas);
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && isNoteOpen) {
-                closeNote();
-            } else if (e.key === 'Enter' && !isNoteOpen) {
-                openNote();
-            }
+          optionsHTML += `
+            <button 
+              ${isAnswered ? 'disabled' : ''} 
+              onclick="handleQuizAnswer(${idx}, ${optIdx})" 
+              class="p-3.5 rounded-xl border text-left text-xs transition duration-200 flex items-start justify-between gap-2 ${btnStyle}">
+              <span>${opt}</span>
+              ${statusBadge ? `<span class="text-[10px] font-mono font-bold">${statusBadge}</span>` : ''}
+            </button>
+          `;
         });
+        optionsHTML += `</div>`;
 
-        window.addEventListener('DOMContentLoaded', () => {
-            initStars();
-            animateStars();
-        });
-    </script>
+        let feedbackHTML = '';
+        if (isAnswered) {
+          const isCorrect = selectedOption === q.answerIndex;
+          feedbackHTML = `
+            <div class="p-3.5 rounded-xl text-xs mt-3 ${isCorrect ? 'bg-green-950/40 border border-green-800 text-green-200' : 'bg-red-950/40 border border-red-800 text-red-200'}">
+              <div class="font-bold flex items-center gap-1.5 mb-1">
+                ${isCorrect ? '🎉 Correct Answer!' : '❌ Not Quite Right!'}
+              </div>
+              <div class="text-slate-300 leading-relaxed"><strong>Why this is correct:</strong> ${q.explanation}</div>
+            </div>
+          `;
+        }
+
+        qCard.innerHTML = `
+          <div class="flex items-center justify-between border-b border-surfaceBorder pb-3">
+            <span class="text-xs font-mono font-bold text-neonYellow">Question 0${idx+1} of 10 &bull; ${q.topic}</span>
+            <span class="text-[11px] text-slate-400 font-mono">1 Point</span>
+          </div>
+          <h4 class="text-sm sm:text-base font-semibold text-white leading-relaxed">${q.question}</h4>
+          ${optionsHTML}
+          ${feedbackHTML}
+        `;
+
+        container.appendChild(qCard);
+      });
+
+      updateScoreDisplay();
+    }
+
+    function handleQuizAnswer(questionIndex, selectedOptionIndex) {
+      if (quizUserAnswers.hasOwnProperty(questionIndex)) return;
+      quizUserAnswers[questionIndex] = selectedOptionIndex;
+      renderQuiz();
+    }
+
+    function calculateScore() {
+      let score = 0;
+      QUIZ_QUESTIONS.forEach((q, idx) => {
+        if (quizUserAnswers[idx] === q.answerIndex) score++;
+      });
+      return score;
+    }
+
+    function updateScoreDisplay() {
+      const score = calculateScore();
+      const text = `${score} / ${QUIZ_QUESTIONS.length}`;
+      document.getElementById('quiz-score-badge').textContent = text;
+      document.getElementById('quick-score').textContent = text;
+    }
+
+    function restartQuiz() {
+      quizUserAnswers = {};
+      renderQuiz();
+    }
+  </script>
+
+  <script>
+    // Presentation / Fullscreen Mode Toggle
+    function togglePresentationMode() {
+      document.body.classList.toggle('presentation-mode');
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+    }
+
+    // Export current standalone HTML
+    function downloadSelf() {
+      const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "technology_explorer.html";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Application Bootstrap on Load
+    window.addEventListener('DOMContentLoaded', () => {
+      renderDashboardCards();
+      renderQuiz();
+      navigateTo('dashboard');
+    });
+  </script>
 </body>
 </html>
